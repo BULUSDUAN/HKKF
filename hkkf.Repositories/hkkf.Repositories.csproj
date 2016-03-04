@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{03CA6AA2-604C-4D55-80E8-5ED3671071E0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>hkkf.Repositories</RootNamespace>
+    <AssemblyName>hkkf.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="antlr.runtime">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\antlr.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\LJZC\References\SharpZipLib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Common">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Core">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Data">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Data.NHibernate">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Data.NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Extensions">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Web.Mvc">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.AddIn">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\NHibernate.AddIn.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Spring">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.ByteCode.Spring.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Caches.SysCache.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache2">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Caches.SysCache2.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Linq">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="CompanyRepository.cs" />
+    <Compile Include="ContactRepositories.cs" />
+    <Compile Include="DaysDataRepository.cs" />
+    <Compile Include="ExamPagesRepository.cs" />
+    <Compile Include="ExamTypeRepository.cs" />
+    <Compile Include="kfGradeRepository.cs" />
+    <Compile Include="Kf_Role_TypeRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PersonPBRepository.cs" />
+    <Compile Include="PersonShopRepository.cs" />
+    <Compile Include="PinFenRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceRepository.cs" />
+    <Compile Include="ShopRepository.cs" />
+    <Compile Include="ShopTypeRepositories.cs" />
+    <Compile Include="ShopWenTiRepository.cs" />
+    <Compile Include="StudentRepository.cs" />
+    <Compile Include="TestproblemRepository.cs" />
+    <Compile Include="UserRepository.cs" />
+    <Compile Include="WrongRepository.cs" />
+    <Compile Include="wwhRepository.cs" />
+    <Compile Include="ShopCountLevelRepository.cs" />
+    <Compile Include="ShopDifficultyLevelRepository.cs" />
+    <Compile Include="UserEnmTypeRepository.cs" />
+    <Compile Include="WorkDateRepository.cs" />
+    <Compile Include="UserWorkDayOrNightRepository.cs" />
+    <Compile Include="UserEnmLevelRepository.cs" />
+    <Compile Include="UserSalaryRepository.cs" />
+    <Compile Include="Kf_DepartMentRepository.cs" />
+    <Compile Include="PayTypeRepository.cs" />
+    <Compile Include="PayCircleRepository.cs" />
+    <Compile Include="PayRecordsRepository.cs" />
+    <Compile Include="ShopGroupRepository.cs" />
+    <Compile Include="ShopGroupDetailRepository.cs" />
+    <Compile Include="PersonShopGroupPBsRepository.cs" />
+    <Compile Include="PersonShopGroupRepository.cs" />
+    <Compile Include="ShopTempletRepository.cs" />
+    <Compile Include="ShopTempletTypeRepository.cs" />
+    <Compile Include="ShopTempletDetailsRepository.cs" />
+    <Compile Include="PBDateTempletRepository.cs" />
+    <Compile Include="PersonPBDataRepository.cs" />
+    <Compile Include="PayRequireRecordsRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\hkkf.Common\hkkf.Common.csproj">
+      <Project>{DDEAB85A-FDC1-46F1-B343-A677CF313CD5}</Project>
+      <Name>hkkf.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\hkkf.Models\hkkf.Models.csproj">
+      <Project>{5B88A18F-9AC3-425D-B4E8-77E19698607C}</Project>
+      <Name>hkkf.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hibernate.cache.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

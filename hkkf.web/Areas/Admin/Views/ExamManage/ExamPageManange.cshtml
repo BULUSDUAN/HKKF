@@ -1,0 +1,84 @@
+﻿@model JieNuo.Data.PagedData<hkkf.Models.ExamPages>
+
+@{
+    ViewBag.Title = "试卷管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("试卷信息", " 试卷管理")
+@using (Ajax.JQueryBeginForm("ExamPageManange", "ExamManage", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                题目：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Pname", null, new { id = "Pname" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+       @Html.ActionLink("添加试卷", "AddExamPageType", "ExamManage", new { EtypeID = ViewBag.ETypeid as string }, new { target = "#main", @class = "button6" })
+        
+     @* @Html.ActionLink("删除用户", "DeleteUser", "UsersManage", null, new { target = "#main", @class = "button4" })*@
+   <input  class="button6" value="删除试卷" type="submit" id="deleteBtn"/>
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>试卷类型</th>
+                <th>题型</th>
+                <th>问题</th>
+                <th>正确答案</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item, it => it.ETypeID)</td>
+    <td>@Html.DisplayValueFor(item, it => it.PTypeID)</td>
+    <td>@Html.DisplayValueFor(item, it => it.Title)</td>
+    <td>@Html.DisplayValueFor(item, it => it.TrueAnswer)</td>
+
+    <td>
+         @Html.ActionLink("修改", "AddExamPageType", "ExamManage", new { IsEdit = "1", id = item.ID, EtypeID=item.ETypeID.ID }, new { target = "#main", @class = "button4" })
+        
+    </td>
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

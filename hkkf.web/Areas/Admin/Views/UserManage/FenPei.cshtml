@@ -1,0 +1,104 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using hkkf.Models
+@using hkkf.Repositories
+@model hkkf.Models.PersonShop
+@{
+    ViewBag.Title = "分配店铺";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        $("#querySave").click(function () {
+            $("#subAction").attr("value", "save");
+        });
+    });
+ </script>
+@Html.NavigationBar("分配管理", "分配店铺管理")
+@using (Ajax.JQueryBeginForm("FenPei", "UserManage", new JQueryOptions { UpdateTarget = "#main" }))
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer">@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0">
+        <tr>
+            <td width="17%" align="right">
+                <p>
+                    店铺：</p>
+                @Html.Hidden("shopId", ViewBag.shopeId as string)
+            </td>
+            <td colspan="2">
+                <span>@ViewBag.shopeName</span>
+            </td>
+        </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>
+                    人员信息：</p>
+            </td>
+            <td colspan="2">
+                @{var list = ViewBag.UserList as List<User>;}
+                @{ var userfenpeilist = ViewBag.FenPeiList as List<PinFen>;}
+                <table>
+                    @{
+                   var ix = 0;
+                   for (int i = 0; i < list.Count; i++)
+                   {
+
+                       if (ix++ % 2 == 0)
+                       {
+                        @:<tr></tr>
+                       }
+                         
+                       if (userfenpeilist != null)
+                       {
+                           if (userfenpeilist.Select(p => p._user.ID.ToString()).Contains(list[i].ID.ToString()))
+                           {
+                               @:<td>
+                                @Html.CheckBox("UserIDs", true, new { value = list[i].ID }) @list[i].userName
+                               @:</td>
+                               @:<td>
+                                var kfRole = userfenpeilist.Where(p => p._user == list[i]);
+                                @Html.DropDownList("KfRoleIDs", this.ViewData["kfRoleList"] as IEnumerable<SelectListItem>, kfRole.First().kf_Role_Type.RoleName)  
+                               @:</td>
+                           }
+                           else
+                           {    
+                                @:<td>
+                                @Html.CheckBox("UserIDs", false, new { value = list[i].ID }) @list[i].userName
+                                @:</td>
+                                @:<td>
+                                @Html.DropDownList("KfRoleIDs", this.ViewData["kfRoleList"] as IEnumerable<SelectListItem>) 
+                                @:</td>
+                           }
+                       }
+                       else
+                       {
+                                @:<td>
+                                @Html.CheckBox("UserIDs", false, new { value = list[i].ID }) @list[i].userName
+                                @:</td>
+                                @:<td>
+                                @Html.DropDownList("KfRoleIDs", this.ViewData["kfRoleList"] as IEnumerable<SelectListItem>) 
+                                @:</td> 
+                       }                          
+                   }                  
+                   }
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                &nbsp;
+            </td>
+            <td width="23%" height="60">
+                <label>
+                    @Html.ActionSubmitButton("querySave", "保存", new { id = "querySave", @class = "button" })
+                </label>
+            </td>
+            <td>
+                <label>
+                    @Html.ActionLink("返回", "ShopIndexForFenPei", "ShopManage", null, new { target = "#main", @class = "button" })
+                </label>
+            </td>
+        </tr>
+    </table>
+}

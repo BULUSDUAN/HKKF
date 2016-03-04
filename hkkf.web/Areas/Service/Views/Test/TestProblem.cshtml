@@ -1,0 +1,362 @@
+﻿@using System.Collections.Generic
+@using hkkf.Models
+@model System.Collections.Generic.List<hkkf.Models.TestProblem>
+@{
+    ViewBag.Title = "TestProblemProblem";
+    Layout = "~/Areas/Service/Views/Shared/_ServiceSite.cshtml";
+}
+
+@Html.ScriptForModel()
+@Html.NavigationBar("客服考试", "考试")
+
+<script type="text/javascript">
+
+
+    $(function () {
+
+        $("#firstpro").hide();
+        $(".bRight").hide();
+        $("#sub").hide();
+        $("#jjk").hide();
+        var i;
+        var check = '';
+        var checval = '';
+        var nu = 1;
+        var j = 0;
+        var o = '';
+        var n = '';
+        var ye = 0;
+        var ioi = '';
+        var count = 100;
+        var dianpu = '';
+        var i1 = 1 * 60;
+        var cle;
+        var timer;
+        if ($("#subAction").val() == "开始考试") {
+
+            $("#startTest").hide();
+            $("#sub").show();
+            $("#firstpro").show();
+            $("#jjk").show();
+        }
+
+        $("#startTest").click(function () {
+
+            $("#subAction").attr("value", "开始考试");
+            $("input[name='dianpu']").each(function () {
+                if ($(this).attr("checked")) {
+                    n = n + $(this).val() + ',';
+                }
+                var choo = $("input:checkbox[name='dianpu']:checked").length;
+                if (!choo) {
+                    alert("请选择店铺");
+                    dianpu = 1;
+                    return false;
+                } else {
+                    dianpu = 2;
+                }
+            });
+            if (dianpu == 1) {
+                return false;
+            }
+            operationSuccessDialog.html("系统正在 随机出选题，请耐心等待....，不要点击“确定”按钮，完成会提示成功！");
+            operationSuccessDialog.dialog('open');
+            timer = setInterval("CountDown()", 1000);
+            $("#dianpu").attr("value", n);
+
+        });
+        $("#sub").click(function () {
+            $.ajax({
+                url: "/service/test/Submit",
+                data: {},
+                type: 'post',
+                cache: false,
+                datatype: 'text',
+                success: function (data) {
+                    if (data == "") {
+                        window.location.href = "/Service/Test/Testend";
+                    } else {
+                        if (CountDown() == 1) {
+                            window.location.href = "/Service/Test/Testend";
+                        } else {
+                            if (confirm(data + "这些宝贝没有回答哦！确定提交？")) {
+
+                                window.location.href = "/Service/Test/Testend";
+                            }
+                        }
+                    }
+
+                }
+
+            });
+        });
+        function chooses(io, i) {
+
+            var jk = $("#" + i).attr("value1");
+            if (check == 1) {
+                o = '';
+                $("input[name='a']").each(function () {
+                    if ($(this).attr("checked")) {
+                        o = o + $(this).val();
+                    }
+                });
+                $.ajax({
+                    url: "/service/test/Grade",
+                    data: { id: io, answer: o, othoranswer: jk, check: check, ye: ye, ioi: ioi },
+                    type: 'get',
+                    cache: false,
+                    datatype: 'text',
+                    success: function (data) {
+                        if (data != null) {
+                            if (data.indexOf(',') >= 0) {
+                                var jl = new Array();
+                                jl = data.split(',');
+                                for (var tr = 0; tr < jl.length; tr++) {
+                                    $("input[type='checkbox'][value='" + jl[tr] + "']").attr("checked", true);
+                                }
+                            } else {
+                                $("input[type='radio'][value='" + data + "']").attr("checked", true);
+                            }
+                        }
+                    }
+                });
+            } else {
+                var choose = $("input:radio[name='o']:checked").val();
+                if (choose) {
+                    $.ajax({
+                        url: "/service/test/Grade",
+                        data: { id: io, answer: choose, othoranswer: jk, check: check, ye: ye, ioi: ioi },
+                        type: 'get',
+                        cache: false,
+                        datatype: 'text',
+                        success: function (data) {
+                            if (data != null) {
+                                if (data.indexOf(',') >= 0) {
+                                    var jl = new Array();
+                                    jl = data.split(',');
+                                    for (var tr = 0; tr < jl.length; tr++) {
+                                        $("input[type='checkbox'][value='" + jl[tr] + "']").attr("checked", true);
+                                    }
+                                } else {
+                                    $("input[type='radio'][value='" + data + "']").attr("checked", true);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        function Way(io, i) {
+            ioi = io;
+            $.ajax({
+                url: "/service/test/testanswer",
+                data: { id: io },
+                type: 'get',
+                cache: false,
+                datatype: 'json',
+                success: function (data) {
+                    nu = 2;
+
+                    $("#timu").html("");
+                    if (data.TrueAnswer.length > 1) {
+                        $("#timu").append("<div>" + i + ". " + data.Title + ":</div>");
+                        $("#timu").append("<div><input type='checkbox' name='a'  value='A'>A. " + data.AnswerA + ":</div>");
+                        $("#timu").append("<div><input type='checkbox' name='a'  value='B'>B. " + data.AnswerB + ":</div>");
+                        $("#timu").append("<div><input type='checkbox' name='a'  value='C'>C. " + data.AnswerC + ":</div>");
+                        $("#timu").append("<div><input type='checkbox' name='a'  value='D>D. " + data.AnswerD + ":</div>");
+                        if (data.AnswerE != null && data.AnswerE != "") {
+                            $("#timu").append("<div><input type='checkbox' name='e'  value='E'>E. " + data.AnswerE + "</div>");
+                        }
+                        check = "1";
+                    } else {
+                        $("#timu").append("<div>" + i + ". " + data.Title + ":</div>");
+                        $("#timu").append("<div><input type='radio' name='o' value='A'>A. " + data.AnswerA + ":</div>");
+                        $("#timu").append("<div><input type='radio' name='o' value='B'>B. " + data.AnswerB + ":</div>");
+                        $("#timu").append("<div><input type='radio' name='o' value='C'>C. " + data.AnswerC + ":</div>");
+                        $("#timu").append("<div><input type='radio' name='o' value='D'>D. " + data.AnswerD + ":</div>");
+                        if (data.AnswerE != null && data.AnswerE != "") {
+                            $("#timu").append("<div><input type='radio' name='o' value='E'>E. " + data.AnswerE + "</div>");
+                        }
+                        check = "2";
+                    }
+                    $("#timu").append("<a id='jia'>上一题</a>");
+                    $("#timu").append("<a id='jian'>下一题</a>");
+                    $("#jia").click(function () {
+                        var chooseradio = $("input:radio[name='o']:checked").val();
+                        var choosecheckbox = $("input:checkbox[name='a']:checked").val();
+                        if (!choosecheckbox && !chooseradio) {
+                            alert("当前页面没有选择");
+                            return false;
+                        }
+                        var wan = parseInt(i) - 1;
+                        ye = 0;
+                        chooses(io, wan);
+                        i--;
+                        if (i < 1) {
+                            alert("亲，第一道题了哦！");
+                            return false;
+                        }
+                        io = $("#" + i).attr("value1");
+                        Way(io, i);
+                    });
+                    $("#jian").click(function () {
+                        var chooseradio = $("input:radio[name='o']:checked").val();
+                        var choosecheckbox = $("input:checkbox[name='a']:checked").val();
+                        if (!choosecheckbox && !chooseradio) {
+
+                            alert("当前页面没有选择");
+                            return false;
+                        }
+                        var wan = parseInt(i) + 1;
+                        ye = 0;
+                        chooses(io, wan);
+                        i++;
+                        count = $("#coun").attr("value");
+                        if (i > count) {
+                            alert("亲，最后一道题了哦！");
+                            return false;
+                        }
+                        io = $("#" + i).attr("value1");
+                        Way(io, i);
+                    });
+                }
+            });
+        }
+
+        $("#alla a").each(function () {
+            $(this).attr("href", "#");
+            $(this).click(function () {
+                if (nu == 1) {
+                    var id = $(this).attr("value1");
+                    i = $(this).attr("id");
+                    Way(id, i);
+                } else {
+
+                    var chooseradio = $("input:radio[name='o']:checked").val();
+                    var choosecheckbox = $("input:checkbox[name='a']:checked").val();
+                    if (!choosecheckbox && !chooseradio) {
+
+                        alert("当前页面没有选择");
+                        return false;
+                    }
+                    var id = $(this).attr("value1");
+                    i = $(this).attr("id");
+                    ye = 1;
+                    chooses(id, i);
+                    Way(id, i);
+
+                }
+            });
+        });
+        document.onkeydown = onkey;
+        document.onkeypress = onkey;
+
+        function onkey(event) {
+            if ((event.keyCode == 8) || (event.keyCode == 116) || (event.ctrlKey && event.keyCode == 82)) {
+                event.keyCode = 0;
+                event.returnValue = false;
+            }
+
+            return false;
+        };
+    });
+    var maxtime = 60 * 60; //一个小时，按秒计算，自己调整!   
+    function CountDown() {
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = "距离考试结束还有" + minutes + "分" + seconds + "秒";
+            //document.getElementById("timer").innerHTML = msg;
+            $("#timer").html(msg);
+            if (maxtime == 5 * 60) alert('注意，还有5分钟!');
+            --maxtime;
+            return 2;
+        }
+        else {
+            clearInterval(timer);
+            document.getElementById("sub").click();
+            return 1;
+
+        }
+    }
+</script>
+    
+@using (Ajax.JQueryBeginForm("TestProblem", "Test", new JQueryOptions { UpdateTarget = "#main" }))
+{
+    <div class="alertMessageContainer">@ViewBag.message</div>
+    @Html.Hidden("subAction", "今天已经考过试！", new { id = "subAction" })
+    @Html.Hidden("dianpu", "", new { id = "dianpu" })
+    @Html.Hidden("coun",ViewBag.count as string) 
+    <input type="submit" id="startTest" value="开始考试" name="subAction"  style="background-color:#00AAEE;width: 80px;height: 30px;font-weight:900;color:#FFFFFF"/>
+    <div class="top">
+        @{
+          foreach (var item in ViewBag.Typelist as List<Shop>)
+        {
+            <input type="checkbox" value="@item.Name" name="dianpu" class="select-checkbox" />@item.Name
+        }
+        }
+       
+    </div>
+  
+             if (@ViewBag.message != "今天已经考过试！")
+             {     
+         
+        <table >
+            <tr>             
+                <td id="user">
+                    姓名：@ViewBag.Uname.ToString()
+                </td>
+                <td>
+                    考试时间：@ViewBag.startTime
+                </td>
+                <td>
+                    答题时间：<span id="Label32">60</span>
+                    <span id="timer" style="color: #d8730d; float: right;"></span>
+
+                </td>
+                <td>
+                    <input type="button" value="提交试卷" id="sub"/>
+                </td>
+            </tr>
+        </table>
+            <div style="width: 100%; height:400px;" id="">
+                <div style="width: 30%; height: 400px;float: left" id="alla">
+                    <table>
+                        @{
+                            if (Model != null)
+                            {
+
+                                var i = 0;
+                                int o = 1;
+                                foreach (var item in Model)
+                                {
+                                    if (i++%8 == 0)
+                                    {
+                                        @:<tr></tr> 
+                                    }
+
+                                    <td>@Html.ActionLink(o.ToString(), null, null, new {}, new {id = o, @style = "", value1 = item.problemid.ID})</td>
+                                    o++;
+                                }
+                            }
+                        }
+                    </table>
+                    <script>
+                        var id = $(this).attr("value1");
+                        i = $(this).attr("id");
+                        Way(idd, lk);
+                    </script>
+                </div>
+                <div style="width: 70%; height: 400px; float: left" id="timu">
+                    <div style="margin: 0 auto; text-align: center; padding-top: 50px; color: #d8730d; font-size: 20px; font-family: '黑体';" id="jjk" >请点击左边的题号进行考试！！！</div> 
+                </div>
+            </div>
+            
+
+
+
+        
+    }
+
+
+}

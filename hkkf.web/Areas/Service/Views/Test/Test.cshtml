@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Test";
+    Layout = "~/Areas/Service/Views/Shared/_ServiceSite.cshtml";
+}
+@Html.ScriptForModel()
+@Html.NavigationBar("客服考试", "考试")
+<script type="text/javascript">
+    $(function () {
+
+       $("#agree").attr("disabled", true);
+       $("#c").click(function () {
+       
+            if ($("#c").attr("checked")) {
+                alert();
+                $('#agree').removeAttr("disabled");
+            }
+        });
+    });
+
+</script>
+<style>
+    .top {
+        height: 35px;
+        width: 100%;
+        font-family: "黑体";
+        color: #FF7835;
+        line-height: 35px;
+    }
+    .rules {
+        height: 200px;
+        width: 100%;
+        color: #314B76;
+        font-family: "黑体";
+        border-top-color: #1C67EA;
+        border-top-style: solid;
+        border-bottom-color: #778899;
+        border-bottom-style: dashed;
+
+    }
+    .bottom
+    {
+        padding-top: 3px;
+        color: #1c67ea;
+
+    }
+</style>
+@using (Html.BeginForm("TestProblem", "Test",FormMethod.Get))
+{
+    <div class="top">
+        考试规则
+    </div>
+    <div style="width: 100%" class="rules">
+
+
+
+        <p>第一条 为促进开放、透明、分享、责任的新商业文明，保障淘宝用户合法权益，维护淘宝正常经营秩序，根据《大淘宝宣言》及《淘宝平台服务协议》、《天猫服务协议》，制定本规则。</p>
+        <br/>
+        <p>第二条 淘宝规则，是对淘宝用户增加基本义务或限制基本权利的条款。</p>
+        <br/>
+        <p>第三条 违规行为的认定与处理，应基于淘宝认定的事实并严格依规执行。部分违规行为，淘宝网亦将引入大众评审员机制进行认定，淘宝网会基于大众评审员认定的事实严格依规执行。</p>
+
+        <p>淘宝用户在适用规则上一律平等。</p>
+        <br/>
+        <p>第四条 用户应遵守国家法律、行政法规、部门规章及相关规范性文件的规定。对任何涉嫌违反国家法律、行政法规、部门规章及相关规范性文件的规定的行为，本规则已有规定的，适用本规则；</p>
+        <br/>
+        <p> 本规则尚无规定的，淘宝有权酌情处理。但淘宝对用户的处理不免除其应尽的法律义务及应承担的法律责任。用户在淘宝的任何行为，应同时遵守与淘宝及其关联公司所签订的各项协议。
+        </p>
+
+
+    </div>
+    <div class="bottom"><input type="checkbox" id="c"/>
+        <label for="c">
+            已经阅读并同意《考试规则》</label>
+    </div>
+    <div align="center">
+       
+        <input type="submit" id="agree" value="同意" style="background-color:#00AAEE;width: 80px;height: 30px;font-weight:900;color:#FFFFFF"/>
+    </div>
+}

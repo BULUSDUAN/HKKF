@@ -1,0 +1,71 @@
+﻿@using System
+@using DocumentFormat.OpenXml.Office.CustomUI
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.UserWorkDate>
+
+@{
+    ViewBag.Title = "排班分配管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#pB").click(function () {
+            $("#subAction").attr("value", "排班");
+        });
+        $("#pB").click(function () {
+            if (confirm("确定系统排班吗？该时间段如果排班了，那么之前的排班记录将被清空!")) {
+                if ($("#startDate").attr("value").trim() === "") {                   
+                    operationSuccessDialog.html("请输入开始日期！");
+                    operationSuccessDialog.dialog('open');
+                    return false;
+                }
+                if ($("#endDate").attr("value").trim() === "") {
+                    operationSuccessDialog.html("请输入结束日期！");
+                    operationSuccessDialog.dialog('open');
+                    return false;
+                }
+                operationSuccessDialog.html("系统正在排班，请耐心等待....，不要点击“确定”按钮，完成会提示成功！");
+                operationSuccessDialog.dialog('open');
+                $("#subAction").attr("value", "排班");
+                
+            } else {
+                return false;
+            }
+           
+        });
+
+
+    });
+</script>
+
+
+@Html.NavigationBar("排班信息", " 排班分配管理")
+@using (Ajax.JQueryBeginForm("PaiBanIndex", "PaiBan", new { startDate = System.DateTime.Now.Date, endDate = System.DateTime.Now.Date }, new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                安排时间：从
+            </th>
+            <td>
+             @Html.ValueBox(typeof(DateTime), "startDate", ViewData["startDate"], new { id = "startDate" }) 
+            </td>
+            <th>至</th>
+            <td>
+            @Html.ValueBox(typeof(DateTime), "endDate", ViewData["endDate"], new { id = "endDate" })             
+            </td>  
+           
+            <td>
+            <span style="color:Red;">提示：选择周期为一个月</span>
+          
+          <input type="submit" id="pB" name="SubAction" value="排班" class="button" />
+            </td>
+        </tr>
+    </table>    
+}

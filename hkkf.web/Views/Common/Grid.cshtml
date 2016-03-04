@@ -1,0 +1,43 @@
+﻿@model JieNuo.Data.PagedTableData
+@using System.Data
+
+
+@{
+    bool[] bHighlight = new bool[Model.Table.Columns.Count];
+    IEnumerable<string> checkedNames = ViewData["checkedNames"] as IEnumerable<string>;
+    string value = Request["value"];    
+}
+<table class="dataTable">
+    <thead>
+           <tr>
+            <th></th>
+            <th>序号</th>
+            
+                @for (int index = 0; index < Model.Table.Columns.Count; index++)
+                {
+                    DataColumn column = Model.Table.Columns[index];
+                    bHighlight[index] = column.Caption.In(checkedNames);
+            
+            <th>@column.Caption</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+       @{ int serialNum = Model.Pager.FristDataPos;}
+            @foreach (DataRow row in Model.Table.Rows){ 
+        <tr class="@(serialNum % 2 == 0 ? "tr_even": "tr_odd")">
+            <td><input type="radio" name="s"  /></td>
+            <td>@(serialNum++) </td>
+                @for (int column = 0; column < Model.Table.Columns.Count; column++)
+                {
+            <td class="@(Html.If(Model.IsIdProperty(column), "idProperty", Model.IsTextProperty(column), "textProperty"))">
+                @(row[column]
+                       .Format(Model.Format(column))
+                       .HighlightIf(bHighlight[column], value))</td>
+             }
+        </tr>
+        } 
+    </tbody>
+    @Html.EmptyTFootIf(Model.Table.Columns.Count + 2, Model.Table.Rows.Count == 0)
+</table>
+@Html.Pager(Model.Pager)@Html.Hidden("type", Request["type"])

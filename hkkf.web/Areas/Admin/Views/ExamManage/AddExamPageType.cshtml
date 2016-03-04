@@ -1,0 +1,189 @@
+﻿@using hkkf.Models
+@model hkkf.Models.ExamPages
+
+
+@{
+    ViewBag.Title = "添加试卷";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        if ($("#IsEdit").attr("value") != "1") {
+            $("#Title").attr("value", "");
+            $("#AnswerA").attr("value", "");
+            $("#AnswerB").attr("value", "");
+            $("#AnswerC").attr("value", "");
+            $("#AnswerD").attr("value", "");
+            $("#AnswerE").attr("value", "");
+            $("#TrueAnswer").attr("value", "");
+        }
+       
+
+        $("#btnOK").click(function () {
+            if ($("#Title").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入题目！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#IsEdit").attr("value") != "1") {
+            if ($("#PTypeID").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入题型！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }}
+            if ($("#AnswerA").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入A！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#AnswerB").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入B！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#AnswerC").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入C！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#AnswerD").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入D！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#TrueAnswer").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入正确答案！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+
+        }
+        );
+    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("试卷管理", "添加试卷")
+@using (Ajax.JQueryBeginForm("AddExamPageType", "ExamManage", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    <div class="alertMessageContainer" >@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0"  >
+
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.ETypeID)：</p>
+            </td>
+            <td colspan="2">
+                @ViewBag.ETypeName </td>
+        </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.ETypeID)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxForEnum("PTypeID", new[] {PExamType.单选题, PExamType.多选题}, Html.DisplayValueFor(m => m.PTypeID).ToString())
+
+            </td>
+        </tr>
+        @if (ViewBag.ETypeid!="1")
+        {
+    <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model._Shop)：</p>
+            </td>
+            <td colspan="2">
+                 @Html.ValueBoxFor(model => model._Shop)
+                        @Html.RequriedMarkFor(model => model._Shop)
+                        @Html.ValidationMessageFor(model => model._Shop)
+
+            </td>
+        </tr>
+        }
+        <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.Title)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.Title)
+                        @Html.RequriedMarkFor(model => model.Title)
+                        @Html.ValidationMessageFor(model => model.Title) </td>
+                </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.AnswerA)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxFor(model => model.AnswerA)
+                @Html.RequriedMarkFor(model => model.AnswerA)
+                @Html.ValidationMessageFor(model => model.AnswerA) </td>
+        </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.AnswerB)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxFor(model => model.AnswerB)
+                @Html.RequriedMarkFor(model => model.AnswerB)
+                @Html.ValidationMessageFor(model => model.AnswerB) </td>
+        </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.AnswerC)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxFor(model => model.AnswerC)
+                @Html.RequriedMarkFor(model => model.AnswerC)
+                @Html.ValidationMessageFor(model => model.AnswerC) </td>
+        </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.AnswerD)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxFor(model => model.AnswerD)
+                @Html.RequriedMarkFor(model => model.AnswerD)
+                @Html.ValidationMessageFor(model => model.AnswerD) </td>
+        </tr>
+        <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.AnswerE)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.AnswerE)
+                        @Html.RequriedMarkFor(model => model.AnswerE)
+                        @Html.ValidationMessageFor(model => model.AnswerE) </td>
+                </tr>
+
+<tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.TrueAnswer)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.TrueAnswer)
+                        @Html.RequriedMarkFor(model => model.TrueAnswer)
+                        @Html.ValidationMessageFor(model => model.TrueAnswer) </td>
+                </tr>
+        <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存" />
+                            @if (ViewBag.Edit == "1")
+                            {
+                                 @Html.Hidden("IsEdit", "1")
+                            }
+                           @Html.Hidden("ETypeid", ViewBag.ETypeid as string)
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "ExamIndex", "ExamManage", null, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+
+

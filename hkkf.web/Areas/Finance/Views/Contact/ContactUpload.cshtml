@@ -1,0 +1,93 @@
+﻿@using DocumentFormat.OpenXml.Office.CustomUI
+@using hkkf.Models
+@model hkkf.Models.User
+
+@{
+    ViewBag.Title = "合同上传";
+    Layout = "~/Areas/Finance/Views/Shared/_FinanceSite.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#buttonimport').click(function () {
+                        var ids = "";
+                        $("input[name='typeid']").each(function() {
+                            if ($(this).attr("checked"))
+                                ids = ids + "," + $(this).val();
+                        });
+                        if (ids == "" || ids == null) {
+                            alert("请选择数据");
+                            return false;
+                        } else {
+                            $("#Shopid").attr("value",ids);}
+
+
+
+            if ($("#filedata").val() == null || $("#filedata").val() == "") {
+                alert("请选择要上传的文件");
+                return false;
+            }
+            operationSuccessDialog.html("请耐心等待，切勿关闭，数据正在上传中...........");
+            operationSuccessDialog.dialog('open');
+            $("#subAction").attr("value", "上传合同");
+
+        });
+     
+    });
+ </script>
+
+
+@Html.NavigationBar("用户信息", " 上传合同")
+@using (Html.BeginForm("ContactUpload", "Contact",FormMethod.Post, new { enctype = "multipart/form-data" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    @Html.Hidden("userid",ViewBag.userid as string)
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+<table class="infoTable">
+    <tr>
+        <th>店铺：</th>
+        
+            <td>
+                <span>负责店铺：</span>
+                <div>
+                    @{var list = ViewBag.TypeList as List<Shop>;}
+                       
+                    <table>   
+                        @{
+                            var i = 0;
+                            foreach (var item in list)
+                            {
+                                if (i++ % 5 == 0)
+                                {
+                                    @:<tr></tr>
+                                }
+                                <td>
+                                       
+                                    <input type="checkbox" value="@item.ID" name="typeid"/> @item.Name
+                                     @Html.Hidden("Shopid","")
+                                </td>        
+                            }
+                        }
+                    </table>
+                        
+                    
+                </div>
+                   
+            </td>
+        
+        
+    </tr>
+    <tr>
+          <th>文件路径：</th>
+        <td style="width: 560px;">
+            <input type="file" name="pathdata" id="filedata"/>
+            <input type="submit" id="buttonimport" value="上传合同"  class ="button6"/>
+            @Html.ActionLink("返回","UserIndex","Contact",new{@class ="button6"})
+        </td>
+    </tr>
+            </table>
+    
+}
+

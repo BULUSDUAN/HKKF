@@ -1,0 +1,87 @@
+﻿@using DocumentFormat.OpenXml.Office.CustomUI
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.User>
+
+@{
+    ViewBag.Title = "店铺分配管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";    
+}
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+@Html.NavigationBar("分配信息", " 店铺分配管理")
+@using (Ajax.JQueryBeginForm("PinFenByUserIndex", "PinFenManage", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                姓名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("UserName", null, new {id = "Name"})
+            </td>
+            <th>
+                店铺名称：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("ShopName", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>姓名</th>
+                <th>部门</th>
+                <th>手机号</th>
+                <th>状态</th>
+                <th>负责店铺</th>                    
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                 int i = Model.Pager.FristDataPos;   
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item, it => it.userName)</td>
+    <td>@Html.Raw(item.DepartMent.ToString())</td>
+    <td>@Html.DisplayValueFor(item, it => it.Tel)</td>
+    <td>@Html.Raw(item.UserStateID.ToString())</td>
+    <td>        
+    <table class="dataTable">
+    @{
+        PinFenRepository PinFen = new PinFenRepository();
+        List<PinFen> ListPinFen = PinFen.GetPinFenListByUserID(item.ID);
+        foreach (var s in ListPinFen)
+        { 
+            <tr>
+                 <td>@s._shop.Name.ToString().Trim()</td>
+            </tr>   
+        }
+     }
+    </table>
+    </td>
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

@@ -1,0 +1,32 @@
+﻿
+        <div class="menu_top" style="width: 228px;">
+            <p>
+                海客科技财务后台管理系统</p>
+            <ul>
+                <li class="menu_tilte">
+                    <p>
+                        海客科技（财务）</p>
+                    <ul>
+                        <li class="menu_content">
+                            @Html.ActionLink("我的首页", "Index", "Home", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("店铺信息表", "ShopIndex", "Home", null, new { area = "Finance", target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("上传合同", "UserIndex", "Contact", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+  
+                        <li class="menu_content">
+                            @Html.ActionLink("合同管理", "ContactIndex", "Contact", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                       
+                    </ul>
+                </li>
+                <li class="menu_tilte">
+                    <p>
+                        登录管理</p>
+                    <ul>
+                        <li class="menu_content">
+                            @Html.ActionLink("修改密码", "ChangePassword", "Account", new { area = "" }, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>

@@ -1,0 +1,114 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.PersonPB>
+@{
+    ViewBag.Title = "排班管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+        $("#tjBtn").click(function () {
+            $("#subAction").attr("value", "tongjiQuery");
+        });
+        $("#queryBtn").click(function () {
+            $("#subAction").attr("value", "");
+        });
+    });
+</script>
+
+@Html.NavigationBar("排班信息", " 排班信息")
+@using (Ajax.JQueryBeginForm("MyShopPaiBanList", "ShopManage", new JQueryOptions { UpdateTarget = "#main" }))
+{ 
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    @Html.Hidden("id",ViewData["id"])
+    <div class="alertMessageContainer">@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+             <th>
+                安排时间：从
+            </th>
+            <td>
+             @Html.ValueBox(typeof(DateTime), "startDate", ViewData["startDate"], new { id = "startDate" })  
+            </td>
+            <th>
+                至
+            </th>
+            <td>
+             @Html.ValueBox(typeof(DateTime), "endDate", ViewData["endDate"], new { id = "endDate" })   
+            </td>
+           
+        </tr>       
+    </table>
+    <div class="grid">
+        <table class="dataTable">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameForSerialNum()
+                    </th>
+                     <th>
+                        值班日期
+                    </th>
+                     <th>
+                        周几
+                    </th>
+                     <th>
+                        值班类型
+                    </th>
+                     <th>
+                        客服
+                    </th>                                                   
+               </tr>
+            </thead>
+            <tbody>
+                @{               
+    int i = Model.Pager.FristDataPos;
+                }
+                @foreach (var item in Model)
+                {
+                     <tr>
+                        <td>
+                        @(i++)
+                        </td>
+                         <td>
+                           @Html.Raw(item.UserWorkDate.ToString())
+                        </td>     
+                         <td>
+                               @{
+                                string weekstr = "";
+                                switch (item.UserWorkDate.WorkDate.DayOfWeek)
+                                {
+                                    case DayOfWeek.Monday: weekstr = "星期一"; break;
+                                    case DayOfWeek.Tuesday: weekstr = "星期二"; break;
+                                    case DayOfWeek.Wednesday: weekstr = "星期三"; break;
+                                    case DayOfWeek.Thursday: weekstr = "星期四"; break;
+                                    case DayOfWeek.Friday: weekstr = "星期五"; break;
+                                    case DayOfWeek.Saturday: weekstr = "星期六"; break;
+                                    case DayOfWeek.Sunday: weekstr = "星期日"; break;
+                                }
+                               @Html.Raw(weekstr)
+                           }
+                        </td> 
+                         <td>
+                           @Html.Raw(item.WorkDayOrNight.ToString())
+                        </td> 
+                         <td>
+                           @Html.Raw(item._user.ToString())
+                        </td>                  
+                    </tr>      
+                }                         
+            </tbody>
+        </table>
+        @Html.Pager(Model.Pager)
+  </div>
+}
+

@@ -1,0 +1,35 @@
+﻿
+        <div class="menu_top" style="width: 228px;">
+            <p>
+                海客科技销售后台管理系统</p>
+            <ul>
+                <li class="menu_tilte">
+                    <p>
+                        海客科技销售</p>
+                    <ul>
+                        <li class="menu_content">
+                            @Html.ActionLink("我的首页", "Index", "Home", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("店铺信息表", "ShopIndex", "Home", null, new { area = "Sale", target = "#main", onclick = "changeLink(this)" })</li>
+                        @*<li class="menu_content">
+                            @Html.ActionLink("店铺分类管理", "ShopTypeIndex", "ShopEnumManange", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                       <li class="menu_content">
+                            @Html.ActionLink("店铺信息管理", "ShopIndex", "ShopManage", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("排班管理", "PersonShopIndex", "PersonShopManage", null, new { target = "#main", onclick = "changeLink(this)" })</li>*@
+                        @*<li class="menu_content">
+                            @Html.ActionLink("导入各地市考场信息", "Index", "KCInformation", null, new { target = "#main", onclick = "changeLink(this)" })</li>*@
+                       
+                    </ul>
+                </li>
+                <li class="menu_tilte">
+                    <p>
+                        登录管理</p>
+                    <ul>
+                        <li class="menu_content">
+                            @Html.ActionLink("修改密码", "ChangePassword", "Account", new { area = "" }, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>

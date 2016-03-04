@@ -1,0 +1,114 @@
+﻿@using hkkf.Models
+@model hkkf.Models.Student
+
+
+@{
+    ViewBag.Title = "添加学生";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnOK").click(function () {
+            if ($("#Name").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入学生名字！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+        }
+        );
+    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("学生管理", "添加学生")
+@using (Ajax.JQueryBeginForm("AddStudent", "Student", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    <div class="alertMessageContainer" >@ViewBag.alertMessage</div>
+    <table cellspacing="2" cellpadding="0"  >
+
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.StudentName)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.StudentName)
+                        @Html.RequriedMarkFor(model => model.StudentName)
+                        @Html.ValidationMessageFor(model => model.StudentName) </td>
+                </tr>
+                  <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.StudentAge)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.StudentAge)
+                        @Html.RequriedMarkFor(model => model.StudentAge)
+                        @Html.ValidationMessageFor(model => model.StudentAge) </td>
+                </tr>
+                    <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.Address)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.Address)
+                        @Html.RequriedMarkFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address) </td>
+                </tr>
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.Type)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(Model=>Model.Type)
+                        @Html.RequriedMarkFor(model => model.Type)
+                        @Html.ValidationMessageFor(model => model.Type) 
+                    </td>
+                </tr>
+                   <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.StartDay)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model=>model.StartDay)
+                        @Html.ValidationMessageFor(model => model.StartDay) </td>
+                </tr>
+                   <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.EndDay)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model=>model.EndDay)
+                        @Html.ValidationMessageFor(model => model.EndDay) </td>
+                </tr>
+                 <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.Sex)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.RadioButtonFor(model=>model.Sex,true)男
+                        @Html.RadioButtonFor(model=>model.Sex,false)女
+                        @Html.ValidationMessageFor(model => model.Sex) </td>
+                </tr>
+                <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存" />
+                            @if (ViewBag.Edit == "1")
+                            {
+                                 @Html.Hidden("IsEdit", "1")
+                            }
+                           
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "StudentIndex", "Student", null, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+
+

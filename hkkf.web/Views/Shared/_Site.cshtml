@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head id="Head1" runat="server">
+     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>海客科技客服后台管理系统</title>
+    <link href="../../Content/jquery-ui-1.8.custom.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/reset-fonts-grids.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.color.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.easing.min.js") " type="text/javascript"></script>   
+    <script src="@Url.Content("~/Scripts/MicrosoftAjax.js") " type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcValidation.js")" type="text/javascript"></script>    
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.custom.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ui.datepicker-zh-CN.js") " type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ui.datetimepicker.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.valuebox-1.4.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.form-1.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.tooltip-1.0.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/site.js")" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.eventBtn.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.bgiframe.min.js")" type="text/javascript"></script>   
+    <script src="@Url.Content("~/Scripts/jquery.history.js")" type="text/javascript"></script>  
+
+    <script src="/Scripts/oa/oa-dialog.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".bRight").hide();
+            $(".start_menu").live("click", function () {
+                if ($("#menu").is(":visible")) {
+                    $(".aLeft").hide();
+                    $(".bRight").show();
+                    $("#yui-main").animate({ "width": "+=238px" }, "slow");
+                    $("#yui-main").animate({ "width": "-=5px" }, "fast");
+                    $("#menu").animate({ "marginLeft": "-=238px" }, "slow");
+                    $("#menu").animate({ "marginLeft": "+=5px" }, "fast");
+                    $("#menu").hide();
+                }
+                else if ($("#menu").is(":visible") == false) {
+                    $(".aLeft").show();
+                    $(".bRight").hide();
+                    $("#yui-main").animate({ "width": "+=5px" }, "fast");
+                    $("#yui-main").animate({ "width": "-=238px" }, "slow");
+                    $("#menu").animate({ "marginLeft": "-=5px" }, "fast");
+                    $("#menu").animate({ "marginLeft": "+=238px" }, "slow");
+                    $("#menu").show();
+                }
+            });
+           
+
+        });
+    </script> 
+    <style type="text/css">   
+     .start_menu
+        {
+          display:block;
+          width:11px;
+          height:50px; 
+        }
+     .aLeft
+    {        
+         background:url('/content/images/left.gif') center 0px no-repeat;    
+    }
+     .bRight
+    {
+        background:url('/content/images/right.gif') center 0px no-repeat;
+    }
+    </style>
+</head>
+<body>
+   @{Html.EnableClientValidation();}
+ <div id="doc3"  class="yui-t2">
+        <div id="hd">            
+            <div id="logo"></div>   
+           
+            <div id="account"> @Html.ActionLink("退出", "Login", "Account", new { area = "" }, null)</div>
+             
+        </div>
+        <div id="bd">                       
+            <div id="menu" class="yui-b">    
+               
+                          @{Html.RenderPartial("_menu");}
+                                
+            </div>
+            <div id="yui-main">
+             <div style=" float:left; padding-left:238px; padding-top:37px; height:auto; line-height:auto; width:11px; max-width:11px; overflow:hidden;">
+             <a href="javascript:;" class="start_menu aLeft" hidefocus="hidefocus" title="隐藏"></a>
+             <a href="javascript:;" class="start_menu bRight" hidefocus="hidefocus" title="显示"></a>
+             </div>
+                <div class="yui-b">
+
+                </div>               
+                 <div id="main" class="yui-b">                    
+                           @RenderBody()                  
+
+                 </div>
+            </div>
+        </div>
+        <div id="ft">
+            <p>海客科技版权所有  Email：haikekeji@163.com</p>
+            <p>济南市泉城路齐鲁国际大厦180号11</p>
+        </div>
+    </div>
+    
+</body>
+</html>

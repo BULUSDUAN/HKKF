@@ -1,0 +1,36 @@
+﻿
+        <div class="menu_top" style="width: 228px;">
+            <p>
+                海客科技客服后台管理系统</p>
+            <ul>
+                <li class="menu_tilte">
+                    <p>
+                        海客科技客服（管理员操作）</p>
+                    <ul>
+                        <li class="menu_content">
+                            @Html.ActionLink("我的首页", "Index", "Home", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("用户管理", "UserIndex", "UserManage", null, new { area = "Admin", target = "#main", onclick = "changeLink(this)" })</li>
+                       <li class="menu_content">
+                            @Html.ActionLink("店铺信息管理", "ShopIndex", "ShopManage", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("人员分配店铺管理", "PersonShop", "PersonShopManage", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("导入各地市考场信息", "Index", "KCInformation", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("考生分配考场", "FPKSKC", "FpkcManage", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        <li class="menu_content">
+                            @Html.ActionLink("考生分配考场", "FPKSKC", "FpkcManage", null, new { target = "#main", onclick = "changeLink(this)" })</li>
+                    </ul>
+                </li>
+                <li class="menu_tilte">
+                    <p>
+                        登录管理</p>
+                    <ul>
+                        <li class="menu_content">
+                            @Html.ActionLink("修改密码", "ChangePassword", "Account", new { area = "" }, new { target = "#main", onclick = "changeLink(this)" })</li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>

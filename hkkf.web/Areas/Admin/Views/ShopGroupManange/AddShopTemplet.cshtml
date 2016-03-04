@@ -1,0 +1,52 @@
+﻿@using hkkf.Models
+@using hkkf.Repositories
+@model hkkf.Models.ShopTemplet
+<form method="post" action="@this.Request.Url.AbsoluteUri" class="operatInfoDiv">  
+    <table cellspacing="2" cellpadding="0"  >
+
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.ShopTempletName)：</p>
+                    </td>
+                    <td colspan="2" align=left>
+                        @Html.ValueBoxFor(model => model.ShopTempletName)
+                        @Html.RequriedMarkFor(model => model.ShopTempletName)
+                        @Html.ValidationMessageFor(model => model.ShopTempletName) </td>
+                </tr>
+                  <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model._Kf_DepartMent)：</p>
+                    </td>
+                    <td colspan="2" align=left>
+                          @Html.DropDownListFor(model => model._Kf_DepartMent, ViewData["listDepartMent"] as IEnumerable<SelectListItem>, Model == null ? "" : Model._Kf_DepartMent.ID.ToString(), "请选择")         
+                     </td>
+                </tr>
+                 <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.ShopTempletTypeID)：</p>
+                    </td>
+                    <td colspan="2" align=left>     
+                       @Html.ValueBoxForEnum("ShopTempletTypeID", new[] { _ShopTempletType.平时, _ShopTempletType.周末, _ShopTempletType.假期, _ShopTempletType.特定日期 }, Model == null ? "" : Model.ShopTempletTypeID.ToString(), "请选择")
+                    </td>
+                </tr>                  
+                   <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.SpecialDate)：</p>
+                    </td>
+                    <td colspan="2" align=left>                    
+                        @Html.ValueBoxFor(model => model.SpecialDate)
+                        @Html.RequriedMarkFor(model => model.SpecialDate)
+                        @Html.ValidationMessageFor(model => model.SpecialDate) </td>
+                </tr>
+                   <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.isExpire)：</p>
+                    </td>
+                    <td colspan="2" align=left>
+                        @Html.ValueBoxForEnum("isExpire", new[] { isExpire.未过期, isExpire.过期 }, Model == null ? "" : Model.isExpire.ToString(), "请选择")
+                    </td>
+                </tr>               
+    </table>
+</form>
+
+

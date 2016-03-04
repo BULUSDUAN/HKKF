@@ -1,0 +1,39 @@
+﻿@using hkkf.Models;
+@using hkkf.Repositories;
+@model IEnumerable<hkkf.Models.ShopTemplet>
+@{
+    Layout = null;
+}
+
+<form method="post" action="@this.Request.Url.AbsoluteUri" class="operatInfoDiv">
+      
+      <style type="text/css">
+        .shop-list li{float:left;margin:5px;}
+         .shop-list  input{width:22px;height:22px;}
+      </style>
+    <table>
+    <tr>
+    <th>模板名：
+    </th>
+    <td>
+     <ul class="shop-list">
+     @{
+         PBDateTemplet _PBDateTemplet = ViewData["_PBDateTemplet"] as PBDateTemplet;
+         <input type="hidden" name="PBDateTempletID" value=@_PBDateTemplet.ID />
+      }
+      @foreach (var item in Model)          
+      {
+          if (item == _PBDateTemplet._ShopTemplet)
+          {
+                <li><input type="radio" name="id" value="@item.ID" checked/>@item.ShopTempletName.ToString().Trim()</li>
+          }
+          else
+          { 
+                <li><input type="radio" name="id" value="@item.ID"/>@item.ShopTempletName.ToString().Trim()</li>
+          }              
+      } 
+    </ul>
+    </td>
+    </tr>   
+   </table> 
+</form>

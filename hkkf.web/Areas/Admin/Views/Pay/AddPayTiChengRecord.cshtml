@@ -1,0 +1,56 @@
+﻿@using hkkf.Models
+@model hkkf.Models.PayRecords
+
+
+@{
+    ViewBag.Title = "添加付款记录";
+    Layout = null;   
+}
+
+<form method="post" action="@this.Request.Url.AbsoluteUri" class="operatInfoDiv">
+    <table cellspacing="2" cellpadding="0"  >
+   @Html.Hidden("shopID",ViewData["shopID"])
+                  <tr> 
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.PayDate)：</p>
+                    </td>
+                    <td colspan="1"align=left>
+                        @Html.ValueBoxFor(model => model.PayDate)
+                   </td>
+                </tr>
+                <tr> 
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.SaleVolume)：</p>
+                    </td>
+                    <td colspan="1"align=left>
+                        @Html.ValueBoxFor(model => model.SaleVolume)
+                   </td>
+                </tr>
+                <tr> 
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.PayNum)：</p>
+                    </td>
+                    <td colspan="1"align=left>
+                        @Html.ValueBoxFor(model => model.PayNum)
+                   </td>
+                </tr>
+                <tr> 
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.NextPayDate)：</p>
+                    </td>
+                    <td colspan="1"align=left>
+                         @Html.ValueBoxFor(model => model.NextPayDate)
+                   </td>
+                </tr>
+                <tr> 
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.NextPayNum)：</p>
+                    </td>
+                    <td colspan="1"align=left>
+                        @Html.ValueBoxFor(model => model.NextPayNum)
+                   </td>
+                </tr>          
+    </table>
+</form>
+
+

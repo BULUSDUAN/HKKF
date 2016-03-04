@@ -1,0 +1,40 @@
+﻿@using hkkf.Models;
+@using hkkf.Repositories;
+@model IEnumerable<hkkf.Models.PersonShopGroup>
+@{
+    Layout = null;
+}
+
+<form method="post" action="@this.Request.Url.AbsoluteUri" class="operatInfoDiv">
+      
+      <style type="text/css">
+        .shop-list li{float:left;margin:5px;}
+         .shop-list  input{width:22px;height:22px;}
+      </style>
+    <table>
+    <tr>
+    <th>班组名：
+    @Model.FirstOrDefault()._ShopGroups.ToString()
+    </th>
+    <td>
+     <ul class="shop-list">
+     @{
+         PersonShopGroupPBs _PersonShopGroupPB = ViewData["_PersonShopGroupPB"] as PersonShopGroupPBs;
+         <input type="hidden" name="PersonShopGroupPBID" value=@_PersonShopGroupPB.ID />
+      }
+      @foreach (var item in Model)          
+      {
+          if (item._User == _PersonShopGroupPB._User)
+          {
+                <li><input type="radio" name="id" value="@item._User.ID" checked/>@item._User.strUserName</li>
+          }
+          else
+          { 
+                <li><input type="radio" name="id" value="@item._User.ID"/>@item._User.strUserName</li>
+          }              
+      } 
+    </ul>
+    </td>
+    </tr>   
+   </table> 
+</form>

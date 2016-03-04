@@ -1,0 +1,85 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.PinFen>
+@{
+    ViewBag.Title = "客服值班统计";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+<script type="text/javascript">
+    $(function () {
+
+        $("#queryTongji").click(function () {
+            $("#subAction").attr("value", "queryTongji");
+        });
+        $("#queryBtn").click(function () {
+            $("#subAction").attr("value", "");
+        });
+    });
+</script>
+
+@Html.NavigationBar("值班信息", "客服值班统计")
+@using (Ajax.JQueryBeginForm("aaa", "MyShop", new JQueryOptions { UpdateTarget = "#main" }))
+{ 
+     @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+            店铺名称
+            </th>
+            <td style="width: 220px;">@Html.ValueBoxForItem(model => model._shop.Name, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+ 
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+           <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>店铺名</th>             
+                <th>联系人</th>                 
+                <th>催费人</th>
+                <th>主客服</th>
+                <th>客服角色</th>
+             </tr>
+        </thead>
+        <tbody> 
+           @{
+                
+    int i = Model.Pager.FristDataPos;     
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item._shop, it => it.Name)</td>
+    
+<td>@Html.DisplayValueFor(item._shop, it => it.ContractPerson)</td>
+<td>@Html.DisplayValueFor(item._shop.DemandUser, it => it.userName)</td>
+ <td>
+       @Html.DisplayValueFor(item._shop.MainKfUser, it => it.userName)
+ </td>     
+  <td>
+       @Html.DisplayValueFor(item.kf_Role_Type, it => it.RoleName)
+ </td> 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>    
+}
+

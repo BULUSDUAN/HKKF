@@ -1,0 +1,13 @@
+﻿1、IsAnyBetweenTime方法 有问题(已解决)
+2、总共三个人负责一家店铺，如果优先分配排序前两个，前两个值了6天班，让排序第三的来替代。    
+     在分配下一家店铺的时候这两个人也在排序前两个。这个怎么办？
+
+
+
+SQL：
+    select * from dbo.PersonPBs where ShopID=4
+    delete from dbo.PersonPBs where ShopID=1
+
+    select * from dbo.PersonPBs where userID=2
+
+    select COUNT(ShopID),_DateTime from PersonPBs where userID=2 group by _DateTime  

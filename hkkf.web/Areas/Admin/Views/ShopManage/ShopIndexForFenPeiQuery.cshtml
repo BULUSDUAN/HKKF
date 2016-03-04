@@ -1,0 +1,124 @@
+﻿@using hkkf.Repositories
+@using hkkf.Models
+@model JieNuo.Data.PagedData<hkkf.Models.Shop>
+         
+
+@{
+    ViewBag.Title = "店铺管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+<script type="text/javascript">
+    $(function () {
+        $("#querySave").click(function () {
+            $("#subAction").attr("value", "save");
+        });
+    });
+ </script>
+
+@Html.NavigationBar("店铺信息", " 店铺管理")
+@using (Ajax.JQueryBeginForm("ShopIndexForFenPeiQuery", "ShopManage", new JQueryOptions { UpdateTarget = "#main" }))
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>     
+   
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>店铺名</th>
+                <th>部门</th>
+                <th>联系人</th>                 
+                <th>所属类别</th>
+                <th>店铺状态</th>
+                <th>主客服</th>
+                <th>客服</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+<td>@(i++) </td>
+    <td>
+    @{
+        PinFenRepository PinFen = new PinFenRepository();
+        ShopRepository shop = new ShopRepository();
+        if (shop.ifShopCanPaiBan(item) == false)
+        { 
+        <font color="red">   
+         @Html.DisplayValueFor(item, it => it.Name)
+        </font>
+        }
+        else
+        {
+       
+         @Html.DisplayValueFor(item, it => it.Name)     
+        }
+    }
+    </td>
+ <td>@Html.Raw(item._Kf_DepartMent.ToString())</td>
+<td>@Html.DisplayValueFor(item, it => it.ContractPerson)</td>
+    <td>
+        @{
+        ShopTypeRepositories shopTypeRepositories = new ShopTypeRepositories();
+        if (shopTypeRepositories.ExistShopID(item.Type.ID))
+        {
+                  @Html.DisplayValueFor(item, it => it.Type)
+        }
+        else
+        {
+            <span>无</span>
+        }
+        }        
+    </td>
+      <td>@Html.Raw(item.ShopStateID.ToString())</td>
+      <td>@Html.Raw(item.MainKfUser.ToString())</td>
+    <td>
+        <table>
+        <tr>
+        <td>
+        <table>
+        @{
+            List<PinFen> listpinFen = PinFen.GetAll().Where(it => it._shop == item).ToList();
+            foreach (var pinFen in listpinFen)        
+            {
+                <tr>
+                <td>
+                    @Html.Raw(pinFen._user.ToString())
+                </td>
+                </tr>
+            }
+         }
+        </table>
+     </td>    
+    </tr>    
+    </table>
+  </td>   
+</tr>
+ }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

@@ -1,0 +1,96 @@
+﻿@using System.Collections.Generic
+@using hkkf.Models
+@using hkkf.Repositories
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Service/Views/Shared/_ServiceSite.cshtml";
+}
+  <script type="text/javascript">
+      $(function () {
+          $("#datepicker").datepicker({
+              onSelect: function (dateText, inst) {
+                  $.ajax({
+                      type: "GET",
+                    url: "/Service/Home/Index",
+                      data: { date: dateText },
+                      dataType: "text",
+                      success: function (data) {
+                          $("#textA").text("");
+                          $("#textA").append(data);
+                      }
+                  });
+                  
+
+              } 
+          });
+         
+     
+      });
+  </script>
+  <style type="text/css">
+        #tbList {
+            border:1px solid #9ac0db;
+            width:1000px;
+            margin:10px auto;
+            border-collapse:collapse;
+            
+        }
+        #tbList th td{
+            text-align: center;
+        }
+         #tbList th{
+            font-size: 20px;
+            font-weight: bolder;
+            text-align: center;
+            color: #ff5800;
+        }
+        #tbList th, td {
+            border:1px solid #9ac0db;
+            padding:10px;
+        }
+       
+    </style>
+@Html.NavigationBar("首页信息", " 首页管理")
+ <hr style="color: red;"/>
+    <div>
+    <span style="color: #3e00ff;font-size: 30px;">今天值班的店铺是：</span>
+      
+    <br/><div>
+   <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+</div>
+
+</div>
+<div>
+   <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+</div>
+      
+<div>
+    <fieldset>
+
+    </fieldset>
+</div>
+<div>
+    <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+</div>
+<div style="width: 98%; height: 350px; border: 1px seagreen solid; float: left;">
+    <div style="width: 49%; float: left;">
+        <span style="color: #3e00ff; font-size: 30px;">排班日期(点击)查看：</span><div id="datepicker">
+        </div>
+    </div>
+    <div style="width: 30%; float: left; margin-top: 80px;">
+      
+    </div>
+</div>
+
+<div>
+   <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+</div>
+
+<div>
+    <fieldset>
+        <legend><span style="color: #3e00ff;font-size: 30px;">这一月排班表</span></legend> 
+        <div style="border: 2px #3ceb0f solid;">
+            
+        </div>
+    </fieldset>
+</div>

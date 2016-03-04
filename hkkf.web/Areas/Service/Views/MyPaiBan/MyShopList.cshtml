@@ -1,0 +1,63 @@
+﻿@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.PinFen>
+
+@{
+    ViewBag.Title = "排班记录管理表";
+    Layout = "~/Areas/Service/Views/Shared/_ServiceSite.cshtml";
+    
+}
+
+@Html.NavigationBar("我的店铺", "我的店铺信息")
+@using (Ajax.JQueryBeginForm("MyShopList", "MyPaiBan", null, new JQueryOptions { UpdateTarget = "#main" }))
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+            店铺名称
+            </th>
+            <td style="width: 220px;">@Html.ValueBox(typeof(string),"Name",ViewData["ShopName"], new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+ 
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+           <tr>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>店铺名</th>             
+                <th>联系人</th>    
+                 <th>联系方式</th>                 
+                 <th>主客服</th>
+             </tr>
+        </thead>
+        <tbody> 
+           @{
+                
+    int i = Model.Pager.FristDataPos;     
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item._shop, it => it.Name)</td>
+    
+<td>@Html.DisplayValueFor(item._shop, it => it.ContractPerson)</td>
+ <td>@Html.Raw(item._shop.Tel)</td>
+ <td>
+       @Html.DisplayValueFor(item._shop.MainKfUser, it => it.userName)
+ </td>     
+
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>    
+}

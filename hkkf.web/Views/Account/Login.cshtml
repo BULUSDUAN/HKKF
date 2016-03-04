@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>海客科技客服后台管理系统</title>
+    <link href="../../LoginJSCSS/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../../LoginJSCSS/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="main">
+	<div class="header">海客科技客服后台管理系统</div>
+    <div class="headertx">--仅供内部人员专用de</div>
+	<div class="content">
+		<div class="title hide">管理登录</div>
+		<form name="login" action="../Account/Login" method="post">
+			<fieldset>
+				<div class="input">
+					<input class="input_all name" name="UserName" id="name" placeholder="用户名" type="text"  maxLength="24" />
+				</div>
+				<div class="input">
+					<input class="input_all password" name="password" id="password" type="password" placeholder="密码"  maxLength="24" />
+				</div>
+			
+				<div class="enter">
+					<input class="button hide" name="submit" type="submit" value="登录1" />
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+@Html.ActionLink("test", "../Account/Loginss", new { paradd = "sdfsdf" }, new { target="_"})
+<br />
+@Html.ActionLink("打开新窗口", "InDepotList", new { para1 = "111" }, new { target = "_blank" }) 
+
+</body>
+</html>

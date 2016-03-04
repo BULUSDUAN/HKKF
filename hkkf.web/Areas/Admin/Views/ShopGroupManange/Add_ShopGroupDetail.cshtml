@@ -1,0 +1,129 @@
+﻿@using hkkf.Models;
+@using hkkf.Repositories;
+@model IEnumerable<hkkf.Models.Shop>
+@{
+    Layout = null;
+}
+
+<form method="post" action="@this.Request.Url.AbsoluteUri" class="operatInfoDiv">
+      
+      <style type="text/css">
+        .shop-list li{float:left;margin:5px;}
+         .shop-list  input{width:22px;height:22px;}
+      </style>
+    @{
+        List<ShopGroupDetails> listShopGroupDetails = ViewData["listShopGroupDetails"] as List<ShopGroupDetails>;
+        ShopGroups shopGroup = ViewData["shopGroup"] as ShopGroups; 
+     }
+
+    <table>
+    <thead>@Html.Raw(shopGroup._Kf_DepartMent.DepartMentName)</thead>
+    <tr>
+    <th>@Html.Raw(ZhiBanType.全托.ToString())</th>
+    <td>
+     <ul class="shop-list">
+      @foreach (var item in Model)          
+      {
+          //如果不是全托，那么跳出继续
+         if(item.ZhiBanTypeID==ZhiBanType.全托)
+         {
+              //如果店铺在ShopGroupDetails中，那么选中，如果不在，则默认不选中。
+             int count = listShopGroupDetails.Where(it => it._Shop == item).Count();
+             if (count == 0)
+             {
+                <li><input type="checkbox" name="ids" value="@item.ID"/>@item.Name</li>
+             }
+              else
+              { 
+                <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.Name</li>
+              }          
+         }        
+      } 
+    </ul>
+    </td>
+    </tr>
+    @{ 
+      if(shopGroup.WorkDayOrNight==DayOrNight.白班)
+     {
+    <tr>
+    <th>@Html.Raw(ZhiBanType.仅白班.ToString())</th>
+    <td>
+    <ul class="shop-list">
+      @foreach (var item in Model)          
+      {
+           //
+          if (item.ZhiBanTypeID == ZhiBanType.仅白班)
+         {
+              //如果店铺在ShopGroupDetails中，那么选中，如果不在，则默认不选中。
+             int count = listShopGroupDetails.Where(it => it._Shop == item).Count();
+             if (count == 0)
+             {
+                <li><input type="checkbox" name="ids" value="@item.ID"/>@item.Name</li>
+             }
+             else
+             { 
+                <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.Name</li>
+             }
+         }
+      } 
+    </ul>
+    </td>
+    </tr>
+    }
+    }
+    @{ 
+        if (shopGroup.WorkDayOrNight == DayOrNight.晚班)
+        {
+    <tr>
+    <th>晚班</th>
+    <td>
+    <ul class="shop-list">
+      @foreach (var item in Model)
+      {
+          //如果不是全托，那么跳出继续
+          if (item.ZhiBanTypeID == ZhiBanType.仅夜班)
+          {
+              //如果店铺在ShopGroupDetails中，那么选中，如果不在，则默认不选中。
+              int count = listShopGroupDetails.Where(it => it._Shop == item).Count();
+              if (count == 0)
+              {
+                <li><input type="checkbox" name="ids" value="@item.ID"/>@item.Name</li>
+              }
+              else
+              { 
+                <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.Name</li>
+              }
+          }
+      } 
+    </ul>
+    </td>
+    </tr>
+    }}
+
+    <tr>
+    <th>周末</th>
+    <td>
+    <ul class="shop-list">
+      @foreach (var item in Model)          
+      {
+          //如果不是全托，那么跳出继续
+          if (item.ZhiBanTypeID == ZhiBanType.周末)
+         {
+              //如果店铺在ShopGroupDetails中，那么选中，如果不在，则默认不选中。
+             int count = listShopGroupDetails.Where(it => it._Shop == item).Count();
+             if (count == 0)
+             {
+                <li><input type="checkbox" name="ids" value="@item.ID"/>@item.Name</li>
+             }
+             else
+             { 
+                <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.Name</li>
+             }
+         }
+      } 
+    </ul>
+    </td>
+    </tr>
+    </table> 
+
+</form>

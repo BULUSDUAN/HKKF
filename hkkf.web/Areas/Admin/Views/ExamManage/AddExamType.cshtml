@@ -1,0 +1,63 @@
+﻿@using hkkf.Models
+@model hkkf.Models.ExamType
+
+
+@{
+    ViewBag.Title = "添加试卷类别";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnOK").click(function () {
+            if ($("#EName").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入考试类别名！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+
+        }
+        );
+    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("试卷类别管理", "添加试卷类别")
+@using (Ajax.JQueryBeginForm("AddExamType", "ExamManage", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    <div class="alertMessageContainer" >@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0"  >
+
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.EName)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.EName)
+                        @Html.RequriedMarkFor(model => model.EName)
+                        @Html.ValidationMessageFor(model => model.EName) </td>
+                </tr>
+                 
+                <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存" />
+                            @if (ViewBag.Edit == "1")
+                            {
+                                 @Html.Hidden("IsEdit", "1")
+                            }
+                           
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "ExamIndex", "ExamManage", null, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+
+

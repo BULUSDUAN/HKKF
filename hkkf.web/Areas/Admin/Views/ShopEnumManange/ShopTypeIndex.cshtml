@@ -1,0 +1,76 @@
+﻿@model JieNuo.Data.PagedData<hkkf.Models.ShopType>
+
+@{
+    ViewBag.Title = "店铺类别管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("店铺类别信息", " 店铺类别管理")
+@using (Ajax.JQueryBeginForm("ShopTypeIndex", "ShopEnumManange", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺分类名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+       @Html.ActionLink("添加店铺分类", "AddShopEnumType", "ShopEnumManange", null, new { target = "#main", @class = "button6" })
+        
+     @* @Html.ActionLink("删除用户", "DeleteUser", "UsersManage", null, new { target = "#main", @class = "button4" })*@
+   <input  class="button6" value="删除店铺分类" type="submit" id="deleteBtn"/>
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>店铺分类名</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+<td>@Html.DisplayValueFor(item, it => it.Name)</td>
+
+    <td> @Html.ActionLink("修改", "AddShopEnumType", "ShopEnumManange", new { id = item.ID }, new { target = "#main", @class = "button4" })</td>
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

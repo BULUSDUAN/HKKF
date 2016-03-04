@@ -1,0 +1,176 @@
+﻿@using System
+@using DocumentFormat.OpenXml.Office.CustomUI
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.Shop>
+
+@{
+    ViewBag.Title = "店铺类别管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("付款记录管理", "付款记录管理")
+@using (Ajax.JQueryBeginForm("PayRecordManageIndex", "Pay", new JQueryOptions { UpdateTarget = "#main" })) 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr> 
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>店铺</th>
+                <th>部门</th>
+                <th>月服务费</th>
+                <th>周期</th>
+                <th>提成点</th>
+                <th>固定提成</th>
+                <th>备注</th>
+                <th>销售</th>
+                <th>主客服</th>
+                <th>付款类型 日期 金额 下次付款日期 下次付款金额</th>
+                <th>店铺状态</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+    PayRecordsRepository payRecordsRepo = new PayRecordsRepository();
+    int i = Model.Pager.FristDataPos;  
+             //  值班类型 组数 月费用付款周期 销售提成 所属部门销售人员管理人员主客服  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+<td>@(i++) </td>  
+<td>@Html.Raw(item.Name)</td>
+<td>@Html.Raw(item._Kf_DepartMent.ToString())</td>
+<td>@Html.Raw(item.PriceByMonth.ToString())</td>
+<td>@Html.Raw(item._PayCircle.ToString())</td>
+<td>@Html.Raw(item.TiChengRate.ToString())</td>
+<td>@Html.Raw(item.FixedTiCheng.ToString())</td>
+<td>@Html.Raw(item.Beizhu)</td>
+<td>@Html.Raw(item.SaleUser.ToString())</td>
+<td>@Html.Raw(item.MainKfUser.ToString())</td>
+<td>
+<table>
+<tr>
+<td>
+服务费
+</td>
+<td>
+ @{
+        //取出该店铺的最近4次的付款记录，在当月的可修改，不在当月的不可修改。      
+        List<PayRecords> listPayRecords = payRecordsRepo.GetPayRecords(item.ID.ToString(),_PayType.基础服务费);
+        if (listPayRecords.Count() == 0)
+        { 
+            @Html.Raw("无")
+        }
+        else
+        {
+            <table>
+            @{
+                foreach (var PayRecord in listPayRecords)
+                { 
+                    <tr>
+                         <td>
+                        @Html.Raw(PayRecord.PayDate.Date.ToShortDateString())
+                        </td>
+                           <td>
+                        @Html.Raw(PayRecord.PayNum.ToString())
+                        </td>
+                           <td>
+                        @Html.Raw(PayRecord.NextPayDate.Date.ToShortDateString())
+                        </td>
+                           <td>
+                        @Html.Raw(PayRecord.NextPayNum.ToString())                    
+                        </td>
+                        <td>   <a data-opt="add" class="add_temps" href="/admin/Pay/AddPayBaseRecord?id=@PayRecord.ID">修改</a></td>  
+                        <td> <a data-opt="delete" data-msg="确定是否删除？"  class="" href="/admin/Pay/deletePayRecord?id=@PayRecord.ID">删除</a></td> 
+                    </tr>
+                }
+                }
+                </table>
+            }
+         }
+</td>
+<td>
+  <a data-opt="add" class="add_temps" href="/admin/Pay/AddPayBaseRecord?shopID=@item.ID">添加</a>
+</td>
+</tr>
+<tr>
+<td>
+提成
+</td>
+<td>
+ @{
+        //取出该店铺的最近4次的付款记录，在当月的可修改，不在当月的不可修改。
+        List<PayRecords> listPayTiChengRecords = payRecordsRepo.GetPayRecords(item.ID.ToString(),_PayType.提成);
+        if (listPayTiChengRecords.Count() == 0)
+        { 
+            @Html.Raw("无")
+        }
+        else
+        {
+            <table>
+            @{
+            foreach (var PayRecord in listPayTiChengRecords)
+                { 
+                    <tr>                     
+                           <td>
+                        @Html.Raw(PayRecord.PayDate.Date.ToShortDateString())
+                        </td>
+                           <td>
+                        @Html.Raw(PayRecord.PayNum.ToString())
+                        </td>
+                           <td>
+                        @Html.Raw(PayRecord.NextPayDate.Date.ToShortDateString())
+                        </td>
+                           <td>
+                        @Html.Raw(PayRecord.NextPayNum.ToString())                    
+                        </td>
+                        <td>   <a data-opt="add" class="add_temps" href="/admin/Pay/AddPayTiChengRecord?id=@PayRecord.ID">修改</a></td>  
+                        <td> <a data-opt="delete" data-msg="确定是否删除？"  class="" href="/admin/Pay/deletePayRecord?id=@PayRecord.ID">删除</a></td> 
+                    </tr>
+                }
+                }
+                </table>
+            }
+         }
+</td>
+<td>
+  <a data-opt="add" class="add_temps" href="/admin/Pay/AddPayTiChengRecord?shopID=@item.ID">添加</a>
+</td>
+</tr>
+</table>       
+</td>
+<td>@Html.Raw(item.ShopStateID.ToString())</td>
+</tr>
+ }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

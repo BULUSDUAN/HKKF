@@ -1,0 +1,95 @@
+﻿@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.wwh>
+
+@{
+    ViewBag.Title = "旺旺号管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+
+
+//        $("#wwhAdd").click(function () {
+//            $.post("/WwhManage/wwhAdd", { shopid: $("#shopid").val() }, function(data) {
+//                if (data !=null) {
+//                    window.Location.href = "/WwhManage/wwhAdd?shopid="+data;
+//                }
+//            });
+//          
+//      });
+    });
+ </script>
+
+
+@Html.NavigationBar("旺旺号信息", " 旺旺号管理")
+@using (Ajax.JQueryBeginForm("wwhIndex", "WwhManage", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+
+    @Html.Hidden("shopid", ViewBag.shopid as string)
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                旺旺号：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("wwhName", ViewBag.wwhName as string, null)
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+    @Html.ActionLink("添加旺旺号", "wwhAdd", "WwhManage", new{shopid= ViewBag.shopid as string }, new {id="wwhAdd", target = "#main", @class = "button4" })
+   <input  class="button4" value="删除旺旺号" type="submit" id="deleteBtn"/>
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>店铺名</th>
+                <th>旺旺号</th>
+                <th>密码</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+               int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item._Shop, it => it.Name)</td>
+    <td>@Html.DisplayValueFor(item, it => it.Name)</td>
+    <td>@Html.DisplayValueFor(item, it => it.Password)</td>
+
+
+    <td>
+         @Html.ActionLink("修改", "wwhAdd", "WwhManage", new { id = item.ID, IsEdit = 1, shopid = ViewBag.shopid as string }, new { target = "#main", @class = "button4" })
+        
+    </td>
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

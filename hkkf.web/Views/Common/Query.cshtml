@@ -1,0 +1,19 @@
+﻿@model JieNuo.Data.PagedTableData
+
+@{
+    ViewBag.Title = "Query";
+}
+
+<form action="@Request.Url.AbsoluteUri" method="post" class="gridForm">
+    <div class="condition autosubmit">
+        查询条件：
+        @Html.TextBox("value", Request["value"]) @Html.Hidden("QueryString", (string)ViewData["QueryString"])
+        @foreach (var item in ViewData["names"] as IEnumerable<string>) {
+        <input type="checkbox" id="names" name="names" value="@item" checked="checked" />
+        @item
+        }
+    </div>
+    <div class="grid">
+          @{Html.RenderPartial("Grid",Model);}
+    </div>
+</form>

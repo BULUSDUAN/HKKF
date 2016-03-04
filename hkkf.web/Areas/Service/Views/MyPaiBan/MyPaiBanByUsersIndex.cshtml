@@ -1,0 +1,135 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.UserWorkDate>
+@{
+    ViewBag.Title = "排班管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+<script type="text/javascript">
+    $(function () {
+        $("#queryBtn").click(function () {
+            $("#subAction").attr("value", "");
+        });
+    });
+</script>
+@Html.NavigationBar("排班信息", " 我的班次")
+@using (Ajax.JQueryBeginForm("MyPaiBanByUsersIndex", "MyPaiBan", new JQueryOptions { UpdateTarget = "#main" }))
+{ 
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer">@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+         <tr>
+            <th>
+                安排日期：从
+            </th>
+            <td>
+            @Html.ValueBox(typeof(DateTime), "startDate", ViewData["startDate"], new { id = "startDate" })     
+            </td>
+            <th>
+                至
+            </th>
+            <td>
+            @Html.ValueBox(typeof(DateTime), "endDate", ViewData["endDate"], new { id = "endDate" })                         
+            </td>
+            <td style="width: 220px;">
+               @Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+           </td>
+        </tr>      
+    </table>
+    <div class="grid">
+        <table class="dataTable">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameForSerialNum()
+                    </th>
+                      <th>
+                        值班日期
+                    </th>
+                    <th>
+                        周
+                    </th>      
+                     <th colspan="2">
+                        白班/晚班 店铺信息
+                    </th>                                               
+               </tr>
+            </thead>
+            <tbody>
+                @{               
+    int i = Model.Pager.FristDataPos;
+                }
+                @foreach (var item in Model)
+                {
+                    var PanBan = new PersonPBRepository();
+                    List<PersonPB> listPersonPB = PanBan.GetListPersonPBByDateAndUser(item, ViewData["UserID"].ToString().Trim());
+                    // .Where(it => it.UserWorkDate == item)
+                    // .Where(it => it._user.ID == Convert.ToInt32(ViewData["UserID"]))
+                    // .ToList();
+                    <tr>
+                        <td>
+                        @(i++)
+                        </td>
+                         <td>
+                           @Html.DisplayValueFor(item, it => it.WorkDate)
+                        </td> 
+                        <td>
+                             @{
+                    string weekstr = "";
+                    switch (item.WorkDate.DayOfWeek)
+                    {
+                        case DayOfWeek.Monday: weekstr = "星期一"; break;
+                        case DayOfWeek.Tuesday: weekstr = "星期二"; break;
+                        case DayOfWeek.Wednesday: weekstr = "星期三"; break;
+                        case DayOfWeek.Thursday: weekstr = "星期四"; break;
+                        case DayOfWeek.Friday: weekstr = "星期五"; break;
+                        case DayOfWeek.Saturday: weekstr = "星期六"; break;
+                        case DayOfWeek.Sunday: weekstr = "星期日"; break;
+                    }
+                                  @Html.Raw(weekstr)
+                              }
+                        </td>
+                        <td>
+                            <table>
+                                  @{var distinctDayOrNight = from p in listPersonPB
+                                                             orderby p.WorkDayOrNight.ID
+                                                             group p by new { p.WorkDayOrNight };
+                                    foreach (var DayOrNight in distinctDayOrNight)
+                                    {
+                                 <tr>
+                                    <td>
+                                        @Html.Raw(DayOrNight.Key.WorkDayOrNight.ToString())
+                                    </td>
+                                    <td>
+                                        <table>
+                                            @{var distinctShopList = from p in listPersonPB
+                                                                     .Where(p => p.WorkDayOrNight == DayOrNight.Key.WorkDayOrNight)
+                                                                     group p by new { p._Shop };
+                                              foreach (var shop in distinctShopList)
+                                              {
+                                            <tr>
+                                                <td>
+                                                    @Html.Raw(shop.Key._Shop.Name.ToString())
+                                                </td>
+                                            </tr>
+                                              }
+                                             }
+                                        </table>
+                                    </td>
+                                </tr>
+                                    }
+                                  }
+                            </table>
+                        </td>  
+                    </tr>      
+                }                         
+            </tbody>
+        </table>
+        @Html.Pager(Model.Pager)
+  </div>
+}
+

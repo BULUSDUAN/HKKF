@@ -1,0 +1,81 @@
+﻿@using hkkf.Models
+@model hkkf.Models.ShopGroups
+
+
+@{
+     
+    Layout = null;
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnOK").click(function () {
+            if ($("#ShopGroupName").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入班组名！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#WorkDayOrNightaa").attr("value").trim() === "") {
+                operationSuccessDialog.html("请选择值班类型！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+
+
+        }
+        );
+    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("店铺班组管理", "添加店铺班组")
+@using (Ajax.JQueryBeginForm("AddShopGroup", "ShopGroupManange", new JQueryOptions { UpdateTarget = "#main" }))
+{
+    <table cellspacing="2" cellpadding="0"  >
+
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.ShopGroupName)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.ShopGroupName)
+                        @Html.RequriedMarkFor(model => model.ShopGroupName)
+                        @Html.ValidationMessageFor(model => model.ShopGroupName) </td>
+                </tr>
+                 <tr>
+                    <td width="17%" align="right">
+                         @Html.DisplayNameFor(model => model.WorkDayOrNight)：
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxForEnum("WorkDayOrNight", new[] { DayOrNight.白班, DayOrNight.晚班, DayOrNight.全天 }, Model == null ? "" : Model.WorkDayOrNight.ToString(), "请选择") 
+                    </td>
+                </tr>                 
+                     <tr>
+                    <td width="17%" align="right">
+                        @Html.DisplayNameFor(model => model._Kf_DepartMent)：
+                    </td>
+                    <td colspan="2">
+                         @Html.DropDownListFor(model => model._Kf_DepartMent, ViewData["listDepartMent"] as IEnumerable<SelectListItem>, Model == null ? "" : Model._Kf_DepartMent.DepartMentName.ToString(), "请选择")         
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存" />
+                            @if (ViewBag.Edit == "1")
+                            {
+                                 @Html.Hidden("IsEdit", "1")
+                            }
+                           
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "ShopGroupIndex", "ShopGroupManange", null, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+

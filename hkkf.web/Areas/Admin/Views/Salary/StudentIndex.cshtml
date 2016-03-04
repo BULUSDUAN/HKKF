@@ -1,0 +1,110 @@
+﻿@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.Student>
+
+@{
+    ViewBag.Title = "学生管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("学生管理", "学生管理")
+@using (Ajax.JQueryBeginForm("StudentIndex", "Student", new JQueryOptions { UpdateTarget = "#main"}))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                学生姓名
+            </th>
+            <td style="width: 220px;">@Html.TextBox("StudentName", null, new { id = "StudentName" })
+            </td>
+             <th>
+                类别
+            </th>  
+            <td style="width: 220px;">@Html.TextBox("StudentType", null, new { id="StudentType"})
+            </td>
+            <th>
+                性别
+            </th>  
+            <td style="width: 220px;">
+              @Html.DropDownList("Sex", new SelectList(new[] { "不限", "男","女" },"不限"))
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+       @Html.ActionLink("添加学生", "AddStudent", "Student", null, new { target = "#main", @class = "button6" })
+        
+     @* @Html.ActionLink("删除用户", "DeleteUser", "UsersManage", null, new { target = "#main", @class = "button4" })*@
+   <input  class="button6" value="删除学生" type="submit" id="deleteBtn"/>
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>学生姓名</th>
+                <th>年龄</th>
+                <th>地址</th>
+                <th>所属类别</th>
+                <th>开始日期</th>
+                <th>结束日期</th>
+                <th>性别</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+<td>@Html.DisplayValueFor(item, it => it.StudentName)</td>
+<td>@Html.DisplayValueFor(item, it => it.StudentAge)</td>
+<td>@Html.DisplayValueFor(item, it => it.Address)</td>
+<td>@Html.DisplayValueFor(item,it=>it.Type)</td>
+<td>@Html.DisplayValueFor(item,it=>it.StartDay)</td>
+<td>@Html.DisplayValueFor(item,it=>it.EndDay)</td>
+@if (item.Sex==null)
+{
+<td>df</td>
+}
+else if (item.Sex == false)
+{
+<td>女</td>
+}
+else if(item.Sex==true)
+{ 
+<td>男</td>
+}
+<td>@Html.ActionLink("修改", "AddStudent", "Student", new { id = item.ID }, new { target = "#main", @class = "button4" })</td>
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

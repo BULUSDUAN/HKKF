@@ -1,0 +1,105 @@
+﻿@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.Shop>
+
+@{
+    ViewBag.Title = "排班记录管理表";
+    Layout = "~/Areas/Service/Views/Shared/_ServiceSite.cshtml";
+    
+}
+
+@Html.NavigationBar("我的店铺", "我的店铺信息")
+@using (Ajax.JQueryBeginForm("MyShopList", "MyShop",null, new JQueryOptions { UpdateTarget = "#main" }))
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+            店铺名称
+            </th>
+            <td style="width: 220px;">@Html.ValueBoxForItem(model => model.Name, new { id = "Name", value=ViewData["ShopName"]})
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+ 
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+           <tr>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>店铺名</th>
+                  <th>排班记录</th> 
+                <th>联系人</th>                 
+                <th>联系电话 </th> 
+                <th>所属类别</th>
+                <th>值班类型</th>
+                <th>组数</th>
+                <th>月费用</th>
+                <th>付款周期</th>
+                <th>销售提成</th>
+                <th>所属部门</th>
+                <th>销售人员</th>
+                <th>管理人员</th>
+                <th>主客服</th>
+                <th>店铺状态</th>
+             </tr>
+        </thead>
+        <tbody> 
+           @{
+                
+    int i = Model.Pager.FristDataPos;     
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+<td>@(i++) </td>
+      <td>@Html.DisplayValueFor(item, it => it.Name)</td>
+        <td>
+        <a data-opt="add" class="add_temps" href="/admin/ShopManage/MyShopPaiBanList?id=@item.ID">排班记录</a>
+      </td>
+  <td>@Html.DisplayValueFor(item, it => it.ContractPerson)</td>
+<td>@Html.DisplayValueFor(item, it => it.Tel)</td>
+    <td>      
+        @Html.DisplayValueFor(item, it => it.Type)     
+    </td>
+    <td>
+       @Html.DisplayValueFor(item, it => it.ZhiBanTypeID)
+      </td>
+      <td>
+       @Html.DisplayValueFor(item, it => it.GroupCount)
+      </td>
+       <td>
+       @Html.DisplayValueFor(item, it => it.PriceByMonth)
+      </td>
+          <td>
+       @Html.DisplayValueFor(item, it => it._PayCircle)
+      </td>
+      <td>
+      @Html.DisplayValueFor(item, it => it.TiChengRate)
+      </td>
+          <td>
+       @Html.DisplayValueFor(item, it => it._Kf_DepartMent)
+      </td>
+          <td>
+       @Html.DisplayValueFor(item, it => it.SaleUser)
+      </td>
+          <td>
+       @Html.DisplayValueFor(item, it => it.DemandUser)
+      </td>
+      <td>
+       @Html.DisplayValueFor(item, it => it.MainKfUser)
+      </td>
+       <td>
+       @Html.DisplayValueFor(item, it => it.ShopStateID)
+      </td>
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>    
+}

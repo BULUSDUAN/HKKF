@@ -1,0 +1,85 @@
+﻿@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.PersonPB>
+
+@{
+    ViewBag.Title = "排班记录管理表";
+    Layout = "~/Areas/Service/Views/Shared/_ServiceSite.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("排班记录管理表", " 排班记录管理")
+@using (Ajax.JQueryBeginForm("ShopRecord", "Home", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+               值班日期：从
+            </th>
+            <td style="width: 220px;">@Html.ValueBoxForItem(model => model._DateTime, TempData["startDate"], "startDateTime", new { id = "startDate" })
+            </td>
+            <th>
+               至：
+            </th>
+            <td style="width: 220px;">@Html.ValueBoxForItem(model => model._DateTime, TempData["EndDate"], "endDateTime", new { id = "EndDate" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>姓名</th>
+                <th>周几</th>
+                <th>值班日期</th>
+                <th>所负责店铺</th>
+                <th>早/晚班</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item._user, it => it.userName)</td>
+    <td>@Html.DisplayValueFor(item, it => it.weeks)</td>
+    <td>@Html.DisplayValueFor(item, it => it._DateTime)</td>
+    <td>
+    @Html.DisplayValueFor(item._Shop, it => it.Name)
+    </td>
+    <td>@Html.DisplayValueFor(item, it => it.DayOrNight)</td> 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

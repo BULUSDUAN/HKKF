@@ -1,0 +1,4 @@
+﻿@using (Ajax.JQueryBeginForm("test", "MyShop", null, new JQueryOptions { UpdateTarget = "#main" }))
+{
+    @Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+}

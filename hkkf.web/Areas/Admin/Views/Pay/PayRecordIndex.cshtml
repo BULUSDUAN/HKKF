@@ -1,0 +1,125 @@
+﻿@model JieNuo.Data.PagedData<hkkf.Models.PayRecords>
+
+@{
+    ViewBag.Title = "店铺类别管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("付款记录管理", "付款记录管理")
+@using (Ajax.JQueryBeginForm("PayRecordIndex", "Pay", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+                <th>
+                安排时间：从
+            </th>
+            <td>
+            @{
+    List<SelectListItem> list = new List<SelectListItem> {
+                new SelectListItem { Text = "2016", Value = "2016" },
+                new SelectListItem { Text = "2015", Value = "2015" } };
+                }
+              @Html.DropDownList("Year",list,this.ViewData["Year"])  
+            </td>
+            <th>
+                至
+            </th>
+            <td>
+            @{
+            List<SelectListItem> listMonth = new List<SelectListItem> {
+                new SelectListItem { Text = "1", Value = "1" },
+                new SelectListItem { Text = "2", Value = "2" },
+                 new SelectListItem { Text = "3", Value = "3" },
+                  new SelectListItem { Text = "4", Value = "4" },
+                   new SelectListItem { Text = "5", Value = "5" },
+                    new SelectListItem { Text = "6", Value = "6" },
+                     new SelectListItem { Text = "7", Value = "7" },
+                      new SelectListItem { Text = "8", Value = "8" },
+                       new SelectListItem { Text = "9", Value = "9" },
+                        new SelectListItem { Text = "10", Value = "10" },
+                         new SelectListItem { Text = "11", Value = "11" },
+                          new SelectListItem { Text = "12", Value = "12" },            
+                    };
+                }                
+              @Html.DropDownList("Month", listMonth, this.ViewData["Month"])  
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table> 
+    <table>
+    <tr>
+    <td>
+   @this.ViewData["Year"]年
+   @this.ViewData["Month"]月
+    </td>
+    <td>基础服务费实收总计 @ViewData["baseSum"]</td>
+    <td>提成实收总计 @ViewData["tiChengSum"]</td>
+    <td>总计 @ViewData["totalSum"]</td>
+    </tr>
+    </table>
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr> 
+                <th>@Html.DisplayNameForSerialNum()</th>        
+                <th>店铺</th>
+                <th>部门</th>
+                <th>年</th>
+                <th>月</th>
+                <th>付款类型</th>
+                <th>付款日期</th>
+                <th>付款金额</th>
+                <th>下次付款日期</th>
+                <th>下次付款金额</th>
+                <th>催款人</th>
+                <th>确认人</th>                
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+            int i = Model.Pager.FristDataPos;                 
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+<td>@(i++) </td>  
+<td>@Html.DisplayValueFor(item, it => it._Shop)</td>
+<td>@Html.Raw(item._Shop._Kf_DepartMent.ToString())</td>
+<td>@Html.Raw(item.Year.ToString())</td>
+<td>@Html.Raw(item.Month.ToString())</td>
+<td>@Html.DisplayValueFor(item, it => it._PayType)</td>
+<td>@Html.DisplayValueFor(item, it => it.PayDate)</td>
+<td>@Html.DisplayValueFor(item, it => it.PayNum)</td>
+<td>@Html.DisplayValueFor(item, it => it.NextPayDate)</td>
+<td>@Html.DisplayValueFor(item, it => it.NextPayNum)</td>
+<td>@Html.DisplayValueFor(item, it => it.DemandUser)</td>
+<td>@Html.DisplayValueFor(item, it => it.ConfirmUser)</td>
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>    
+}

@@ -1,0 +1,149 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.UserSalary>
+@{
+    ViewBag.Title = "客服值班统计";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+<script type="text/javascript">
+    $(function () {
+
+        $("#queryTongji").click(function () {
+            $("#subAction").attr("value", "queryTongji");
+        });
+        $("#queryBtn").click(function () {
+            $("#subAction").attr("value", "");
+        });
+    });
+</script>
+
+@Html.NavigationBar("值班信息", "客服值班统计")
+@using (Ajax.JQueryBeginForm("MySalary", "MyPaiBan", new JQueryOptions { UpdateTarget = "#main" }))
+{ 
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer">@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                月份：从
+            </th>
+            <td>
+            @{
+    List<SelectListItem> list = new List<SelectListItem> {
+                new SelectListItem { Text = "2017", Value = "2017" },
+                new SelectListItem { Text = "2016", Value = "2016" },
+                new SelectListItem { Text = "2015", Value = "2015" } };
+                }
+              @Html.DropDownList("Year",list,this.ViewData["Year"])  
+            </td>
+            <th>
+                至
+            </th>
+            <td>
+            @{
+            List<SelectListItem> listMonth = new List<SelectListItem> {
+                new SelectListItem { Text = "1", Value = "1" },
+                new SelectListItem { Text = "2", Value = "2" },
+                 new SelectListItem { Text = "3", Value = "3" },
+                  new SelectListItem { Text = "4", Value = "4" },
+                   new SelectListItem { Text = "5", Value = "5" },
+                    new SelectListItem { Text = "6", Value = "6" },
+                     new SelectListItem { Text = "7", Value = "7" },
+                      new SelectListItem { Text = "8", Value = "8" },
+                       new SelectListItem { Text = "9", Value = "9" },
+                        new SelectListItem { Text = "10", Value = "10" },
+                         new SelectListItem { Text = "11", Value = "11" },
+                          new SelectListItem { Text = "12", Value = "12" },            
+                    };
+                }                
+              @Html.DropDownList("Month", listMonth, this.ViewData["Month"])  
+            </td>
+             <td>
+             @Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+             <td>
+             @Html.ActionSubmitButton("queryTongji", "重新统计", new { id = "queryTongji", @class = "button" })
+            </td>
+        </tr>           
+    </table>
+    <div class="grid">
+        <table class="dataTable">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameForSerialNum()
+                    </th>
+                      <th>
+                        年
+                    </th>
+                      <th>
+                        月
+                    </th>
+                      <th>
+                        白班数量
+                    </th>
+                      <th>
+                        晚班数量
+                    </th>
+                     <th>
+                        总值班数量
+                    </th>
+                      <th>
+                        单班工资
+                    </th>
+                      <th>
+                        值班工资
+                    </th>       
+                     <th>
+                        总工资
+                    </th> 
+                                                                               
+               </tr>
+            </thead>
+            <tbody>
+                @{               
+    int i = Model.Pager.FristDataPos;
+                }
+                @foreach (var item in Model)
+                {
+                      <tr>
+                        <td>
+                        @(i++)
+                        </td>
+                         <td>
+                           @Html.DisplayValueFor(item, it => it.Year)
+                        </td> 
+                          <td>
+                           @Html.DisplayValueFor(item, it => it.Month)
+                        </td> 
+                          <td>
+                           @Html.DisplayValueFor(item, it => it.DayNum)
+                        </td> 
+                          <td>
+                           @Html.DisplayValueFor(item, it => it.NightNum)
+                        </td> 
+                          <td>
+                           @Html.DisplayValueFor(item, it => it.TotalNum)
+                        </td> 
+                          <td>
+                           @Html.DisplayValueFor(item.User.UserEnmLevel, it => it.UserLevelSalary)
+                        </td> 
+                          <td>
+                           @Html.DisplayValueFor(item, it => it.zhiBanSalary)
+                        </td>    
+                          <td>
+                           @Html.DisplayValueFor(item, it => it.TotalSalary)
+                        </td>                 
+                    </tr>      
+                }                         
+            </tbody>
+        </table>
+        @Html.Pager(Model.Pager)
+  </div>
+}
+

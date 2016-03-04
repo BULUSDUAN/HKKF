@@ -1,0 +1,93 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@using JieNuo.Data;
+@model JieNuo.Data.PagedData<hkkf.Models.ShopGroups>
+
+@{
+    ViewBag.Title = "店铺班组管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+    $(function () {
+        $("#checkBtn").click(function () {
+            $("#subAction").attr("value", "check");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("店铺班组信息", " 店铺班组管理")
+@using (Ajax.JQueryBeginForm("ShopGroupIndex", "ShopGroupManange", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺班组名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+    @* @Html.ActionLink("添加店铺班组", "AddShopGroup", "ShopGroupManange", null, new { target = "#main", @class = "button6" })*@
+    <a data-opt="add" class="button6" href="/admin/ShopGroupManange/AddShopGroup">添加店铺班组</a>
+     @* @Html.ActionLink("删除用户", "DeleteUser", "UsersManage", null, new { target = "#main", @class = "button4" })*@
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>店铺班组名</th>
+                <th>白班晚班</th>
+                <th>部门</th>
+                <th>班组店铺</th>
+                <th>班组店铺</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+    int i = Model.Pager.FristDataPos;  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+<td>@Html.DisplayValueFor(item, it => it.ShopGroupName)</td>
+<td>@Html.DisplayValueFor(item, it => it.WorkDayOrNight)</td>
+<td>@Html.DisplayValueFor(item, it => it._Kf_DepartMent)</td>
+<td>@Html.Raw(item.ContentShops)</td>
+<td> 
+   <a data-opt="add" class="add_temps" href="/admin/ShopGroupManange/Add_ShopGroupDetail?id=@item.ID">店铺添加或修改</a>
+</td> 
+<td>@* @Html.ActionLink("修改", "AddShopGroup", "ShopGroupManange", new { id = item.ID }, new { target = "#main", @class = "button4" })*@
+ <a data-opt="add" class="button6" href="/admin/ShopGroupManange/AddShopGroup?id=@item.ID">修改</a>
+
+</td> 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>    
+}

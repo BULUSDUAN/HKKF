@@ -1,0 +1,88 @@
+﻿@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.ShopWenTi>
+
+@{
+    ViewBag.Title = "常见问题管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("常见问题", " 常见问题管理")
+@using (Ajax.JQueryBeginForm("WenTiIndex", "WenTi",new {typeid=1}, new JQueryOptions { UpdateTarget = "#main" })) 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("shopname", ViewBag.ShopName as string, new { id = "shopname" })
+            </td>
+                <th>
+                问题类别：
+            </th>
+            <td style="width: 220px;">@Html.ValueBoxForEnum("wtTypeid", new[] { WenTiType.客服要求, WenTiType.库存, WenTiType.发货, WenTiType.物流, WenTiType.付款方式, WenTiType.促销活动, WenTiType.售后, WenTiType.其它 }, "请选择")
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+     @Html.ActionLink("添加问题", "AddWenTi", "WenTi", new { shopid = ViewBag.shopid as string }, new { target = "#main", @class = "button4" })
+        
+     @* @Html.ActionLink("删除用户", "DeleteUser", "UsersManage", null, new { target = "#main", @class = "button4" })*@
+   <input  class="button4" value="删除问题" type="submit" id="deleteBtn"/>
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>店铺名</th>
+                <th>问题类别</th>
+                <th>问题内容</th>
+                <th>问题答案</th>  
+                <th>更新人</th>  
+                <th>更新时间</th>  
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+               int i = Model.Pager.FristDataPos;  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item._Shop, it => it.Name)</td>
+    <td>@Html.DisplayValueFor(item, it => it.wtType)</td>
+    <td>@Html.DisplayValueFor(item, it => it.NContent)</td>
+    <td>@Html.DisplayValueFor(item, it => it.NAnswer)</td>
+     <td>@Html.DisplayValueFor(item, it => it._User)</td>
+      <td>@Html.DisplayValueFor(item, it => it.UpdateTime)</td>
+    <td> @Html.ActionLink("修改", "AddWenTi", "Wenti", new { shopid =item._Shop.ID, id = item.ID, isedit = 1 }, new { target = "#main", @class = "button4" })</td>
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

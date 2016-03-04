@@ -1,0 +1,156 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@using JieNuo.Data;
+@model JieNuo.Data.PagedData<hkkf.Models.ShopTemplet>
+
+@{
+    ViewBag.Title = "排班模板管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+    $(function () {
+        $("#checkBtn").click(function () {
+            $("#subAction").attr("value", "check");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("排班模板信息", " 模板管理")
+@using (Ajax.JQueryBeginForm("ShopTempletIndex", "ShopGroupManange", new JQueryOptions { UpdateTarget = "#main" })) 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺班组名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+     <a data-opt="add" class="button6" href="/admin/ShopGroupManange/AddShopTemplet">添加模板</a>
+     @*@Html.ActionLink("添加排班模板", "AddShopTemplet", "ShopGroupManange", null, new { target = "#main", @class = "button6" })*@        
+     @* @Html.ActionLink("删除用户", "DeleteUser", "UsersManage", null, new { target = "#main", @class = "button4" })*@
+    
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>排班模板名称</th>
+                <th>部门</th>
+                <th>模板类型</th>
+                <th>特定日期</th>
+                <th>是否有效</th>
+                <th>更新有效性</th>
+                <th>是否历史</th>
+                <th>下属班组</th>
+                <th>操作</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+    int i = Model.Pager.FristDataPos;    
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+<td>@Html.DisplayValueFor(item, it => it.ShopTempletName)</td>
+<td>@Html.DisplayValueFor(item, it => it._Kf_DepartMent)</td>
+<td>
+@Html.DisplayValueFor(item, it => it.ShopTempletTypeID)
+</td>
+<td>
+@{
+        if (item.ShopTempletTypeID == _ShopTempletType.特定日期)
+        { 
+            @Html.DisplayValueFor(item, it => it.SpecialDate)
+        }
+        else
+        { 
+            @Html.Raw("无")
+        }    
+ }
+
+</td>
+<td>
+@Html.DisplayValueFor(item, it => it.isValid)
+</td>
+ <td>
+ @Html.ActionSubmitButton("checkBtn", "更新" + item.ID.ToString().Trim(), new { id = "checkBtn", @class = "button" })
+ </td>
+<td>
+@Html.DisplayValueFor(item, it => it.isExpire)
+</td>
+<td>
+<table>
+  @{//把相应的模板的班组列出来根据模板编号
+        ShopTempletDetailsRepository shopTempletDetailRepo = new ShopTempletDetailsRepository();
+        List<ShopTempletDetails> listShopTempletDetails = shopTempletDetailRepo.GetAll()
+            .Where(it => it._ShopTemplet == item)
+            .ToList();
+        if (listShopTempletDetails.Count() == 0)
+        { 
+          <tr>
+                 <td>
+                @Html.Raw("无")
+                </td>
+            </tr>
+        }
+        else
+        {
+            for (i = 0; i < listShopTempletDetails.Count(); i++)
+            { 
+               <tr>
+                 <td>
+                @Html.Raw(listShopTempletDetails.ElementAt(i)._ShopGroup.ShopGroupName)
+                </td>
+                 <td>
+                @Html.Raw(listShopTempletDetails.ElementAt(i)._ShopGroup.WorkDayOrNight.ToString())
+                </td>
+                 <td>
+                 @Html.Raw(listShopTempletDetails.ElementAt(i)._ShopGroup.ContentShops)
+                 </td>
+              </tr>
+            }
+        }  
+    }   
+</table>
+</td>
+<td> 
+   <a data-opt="add" class="add_temps" href="/admin/ShopGroupManange/Add_ShopTempletDetail?id=@item.ID">班组添加或修改</a>
+</td> 
+<td> 
+ <a data-opt="add" class="button6" href="/admin/ShopGroupManange/AddShopTemplet?id=@item.ID">修改</a>
+</td> 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>    
+}

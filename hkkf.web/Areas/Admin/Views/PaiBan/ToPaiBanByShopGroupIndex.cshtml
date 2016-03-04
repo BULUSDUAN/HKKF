@@ -1,0 +1,168 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.ShopGroups>
+@{
+    ViewBag.Title = "排班管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+<script type="text/javascript">
+    $(function () {
+        $("#querySave").click(function () {
+            $("#subAction").attr("value", "save");
+        });
+    });
+ </script>
+
+@Html.NavigationBar("排班信息", " 排班分配管理")
+@using (Ajax.JQueryBeginForm("ToPaiBanByShopGroupIndex", "PaiBan", new JQueryOptions { UpdateTarget = "#main" }))
+{ 
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer">@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+             <th>
+                班组名：
+            </th>
+            <td>@Html.TextBox("ShopGroupName", ViewData["ShopGroupName"], new { id = "ShopGroupName" })
+            </td>
+            <th>
+                安排时间：从
+            </th>
+            <td>
+             @Html.ValueBox(typeof(DateTime), "startDate", ViewData["startDate"], new { id = "startDate" })  
+            </td>
+            <th>
+                至
+            </th>
+            <td>
+               @Html.ValueBox(typeof(DateTime), "endDate", ViewData["endDate"], new { id = "endDate" })  
+            </td>
+            <td>
+                @Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>      
+    </table>
+    <div class="grid">
+        <table class="dataTable">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameForSerialNum()
+                    </th>
+                      <th>
+                         班组名称
+                    </th>
+                     <th>
+                         白班晚班
+                    </th>
+                    <th>店铺</th>
+                    <th rowspan="7">
+                        值班日期
+                    </th>                                                           
+               </tr>
+            </thead>
+            <tbody>
+                @{               
+    int i = Model.Pager.FristDataPos;
+                }
+                @foreach (var item in Model)
+                {
+                    var PanBan = new PersonShopGroupPBsRepository();
+                    List<PersonShopGroupPBs> listPersonShopGroupPBs = PanBan.GetAll()
+                        .Where(it=>it._ShopGroups==item)
+                        .Where(it=>it.UserWorkDate.WorkDate<=Convert.ToDateTime(ViewData["endDate"]))
+                         .Where(it => it.UserWorkDate.WorkDate >= Convert.ToDateTime(ViewData["startDate"]))
+                         .ToList();                                                                  
+                    <tr>
+                        <td>
+                        @(i++)
+                        </td>
+                         <td>
+                           @Html.DisplayValueFor(item, it => it.ShopGroupName)
+                        </td> 
+                         <td>
+                           @Html.Raw(item.WorkDayOrNight.ToString())
+                        </td> 
+                        <td>
+                               <table>
+                               @{//把相应的班组的店铺列出来
+                                    ShopGroupDetailRepository shopGroupDetailRepo = new ShopGroupDetailRepository();
+                                    List<ShopGroupDetails> listShopGroupDetails = shopGroupDetailRepo.GetAll()
+                                        .Where(it => it._ShopGroup.ID == item.ID)
+                                        .ToList();
+                                    if (listShopGroupDetails.Count() == 0)
+                                    { 
+                                      <tr>
+                                             <td>
+                                            @Html.Raw("无")
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        for (i = 0; i < listShopGroupDetails.Count(); i++)
+                                        { 
+                                           <tr>
+                                             <td>
+                                            @Html.Raw(listShopGroupDetails.ElementAt(i)._Shop.Name)
+                                            </td>
+                                          </tr>
+                                        }
+                                    }  
+                                }   
+                            </table>
+                        </td>
+                        <td>
+                        <table>
+                        @{ var distinctWorkDate = from y in listPersonShopGroupPBs
+                                                  group y by new { y.UserWorkDate,y._User,y.ID};
+
+                           foreach (var workDate in distinctWorkDate)
+                           {
+                               <tr>
+                               <td>
+                                @Html.Raw(workDate.Key.UserWorkDate.WorkDate.Date.ToShortDateString())
+                               </td>    
+                                                                                         
+                                     <td>
+                                     @{
+                                         
+                               string weekstr = "";
+                               switch (workDate.Key.UserWorkDate.WorkDate.DayOfWeek)
+                               {
+                                   case DayOfWeek.Monday: weekstr = "星期一"; break;
+                                   case DayOfWeek.Tuesday: weekstr = "星期二"; break;
+                                   case DayOfWeek.Wednesday: weekstr = "星期三"; break;
+                                   case DayOfWeek.Thursday: weekstr = "星期四"; break;
+                                   case DayOfWeek.Friday: weekstr = "星期五"; break;
+                                   case DayOfWeek.Saturday: weekstr = "星期六"; break;
+                                   case DayOfWeek.Sunday: weekstr = "星期日"; break;
+                               }
+                                             @Html.Raw(weekstr)
+                                      }
+                                  </td> 
+                                    <td>                   
+                                     @Html.Raw(workDate.Key._User.ToString())              
+                                   </td>
+                                   <td>
+                                    <a data-opt="add" class="add_temps" href="/admin/PaiBan/Add_ShopGroupKefu?id=@workDate.Key.ID">客服添加或修改</a>
+                                   </td>
+                                </tr>
+                           }
+                            }             
+                            </table> 
+                           </td>             
+                                             
+                    </tr>      
+                }                         
+            </tbody>
+        </table>
+        @Html.Pager(Model.Pager)
+  </div>
+}
+

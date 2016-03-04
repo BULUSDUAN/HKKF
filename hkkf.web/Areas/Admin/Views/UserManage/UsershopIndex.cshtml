@@ -1,0 +1,95 @@
+﻿@using DocumentFormat.OpenXml.Office.CustomUI
+@using hkkf.Models
+@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.User>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("用户信息", " 用户管理")
+@using (Ajax.JQueryBeginForm("UsershopIndex", "UserManage", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                姓名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new {id = "Name"})
+            </td>
+            <th>
+                店铺名称：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("ShopName", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+       
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>姓名</th>            
+                <th>工号</th>
+                <th>手机号</th>
+
+                <th>负责店铺</th>
+             
+               
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item, it => it.userName)</td>
+       <td>@Html.DisplayValueFor(item, it => it.ID)</td>
+    <td>@Html.DisplayValueFor(item, it => it.Tel)</td>
+  
+    <td>
+        @{
+        PersonShopRepository shopRepository = new PersonShopRepository();
+        }
+        <span>@shopRepository.GetShopNameByShopID(item.ShopID)</span>
+    
+    </td>
+    
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

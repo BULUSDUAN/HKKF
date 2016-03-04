@@ -1,0 +1,83 @@
+﻿@using hkkf.Models
+@model hkkf.Models.PersonPB
+
+
+@{
+    ViewBag.Title = "添加排班";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnOK").click(function () {
+            if ($("#_user").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入用户！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#DayOrNight").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入白班还是晚班！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#_Shop").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入店铺！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+
+            if ($("#weeks").attr("value").trim() === "") {
+                operationSuccessDialog.html("星期几！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#_DateTime").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入日期！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+
+
+        }
+        );
+    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("排班管理", "添加排班")
+@using (Ajax.JQueryBeginForm("EditPb", "PaiBan", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    
+    <div class="alertMessageContainer" >@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0">
+
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model._user)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model._user)
+                        @Html.RequriedMarkFor(model => model._user)
+                        @Html.ValidationMessageFor(model => model._user) </td>
+                </tr>
+            
+        
+      
+                <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存" />
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "ManageIndex", "PaiBan", null, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+
+

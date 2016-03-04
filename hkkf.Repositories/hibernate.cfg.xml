@@ -1,0 +1,20 @@
+﻿<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    <property name="current_session_context_class">NHibernate.AddIn.WebCurrentSessionContext, NHibernate.AddIn</property>
+    <property name='proxyfactory.factory_class'>NHibernate.ByteCode.Spring.ProxyFactoryFactory, NHibernate.ByteCode.Spring</property>
+    <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+    <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
+    <property name="dialect">NHibernate.Dialect.MsSql2005Dialect</property>
+    <property name="show_sql">false</property>
+    <property name="connection.connection_string">
+		<!--Data Source=192.168.1.110\SQLEXPRESS05;User Id = sa;Password=sasa;Initial Catalog=LJZCDemo4;-->
+      <!--Data Source=20120217-1816;User Id = sa;Password=sasa;Initial Catalog=baoming20120312;MultipleActiveResultSets=True; Max Pool Size= 500; Application Name=sjw;-->
+		Data Source=.;User Id = sa;Password=sasa;Initial Catalog=hkkfdata;MultipleActiveResultSets=True; Max Pool Size= 500;
+		<!--Data Source=.;User Id = sa;Password=123456;Initial Catalog=BaoMing2012;-->
+	</property>
+    <property name="adonet.batch_size">1000</property>
+    <property name="generate_statistics">true</property>
+    <property name="use_outer_join">true</property>
+    <property name="command_timeout">90</property>
+  </session-factory>
+</hibernate-configuration>

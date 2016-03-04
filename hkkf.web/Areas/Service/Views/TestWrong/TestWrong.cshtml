@@ -1,0 +1,61 @@
+﻿@model  JieNuo.Data.PagedData<hkkf.Models.Wrong>
+@{
+    ViewBag.Title = "TestWrong";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+@using (Ajax.JQueryBeginForm("TestWrong", "TestWrong", new JQueryOptions { UpdateTarget = "#main" }))
+{
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                姓名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("userName", null, new {id = "Name"})
+            </td>
+            <th>
+                日期：
+            </th>
+            <td>@Html.ValueBoxForItem(model => model.time, TempData["startDate"], "startDate", new {id = "startDate"})
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new {id = "queryBtn", @class = "button"})
+            </td>
+        </tr>
+    </table>
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+    <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>用户名</th>
+                <th>日期</th>
+                <th>错题</th>               
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+               int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item.userid, it => it.Name)</td>
+    <td>@Html.DisplayValueFor(item, it => it.time)</td>
+    <td>@Html.DisplayValueFor(item.wrong, it => it.Title)</td>       
+</tr>
+    }
+</tbody>
+</table>
+
+@Html.Pager(Model.Pager)
+</div>
+}
+

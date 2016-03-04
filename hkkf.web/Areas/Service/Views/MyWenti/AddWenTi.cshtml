@@ -1,0 +1,134 @@
+﻿@using hkkf.Models
+@model hkkf.Models.ShopWenTi
+
+
+@{
+    ViewBag.Title = "添加问题";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+//    $(function () {
+//        $("#btnOK").click(function () {
+//            if ($("#Name").attr("value").trim() === "") {
+//                operationSuccessDialog.html("请输入用户名！");
+//                operationSuccessDialog.dialog('open');
+//                return false;
+//            }
+//            if ($("#Password").attr("value").trim() === "") {
+//                operationSuccessDialog.html("请输入密码！");
+//                operationSuccessDialog.dialog('open');
+//                return false;
+//            }
+//            if ($("#surePwd").attr("value").trim() === "") {
+//                operationSuccessDialog.html("请输入确认密码！");
+//                operationSuccessDialog.dialog('open');
+//                return false;
+//            }
+//            if ($("#Password").attr("value").trim() !== $("#surePwd").attr("value").trim()) {
+//                operationSuccessDialog.html("输入的两次密码不一样！");
+//                operationSuccessDialog.dialog('open');
+//                return false;
+//            }
+//            if ($("#Email").attr("value").trim() === "") {
+//                operationSuccessDialog.html("请输入邮箱！");
+//                operationSuccessDialog.dialog('open');
+//                return false;
+//            }
+//            if ($("#Tel").attr("value").trim() === "") {
+//                operationSuccessDialog.html("请输入手机号！");
+//                operationSuccessDialog.dialog('open');
+//                return false;
+//            }
+//            if ($("#QQ").attr("value").trim() === "") {
+//                operationSuccessDialog.html("请输入QQ！");
+//                operationSuccessDialog.dialog('open');
+//                return false;
+//            }
+
+//        }
+//        );
+//    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("添加问题", "问题管理")
+@using (Ajax.JQueryBeginForm("AddWenTi", "MyWenti", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    
+    <div class="alertMessageContainer" >@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0">
+
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model._Shop)：</p>
+            </td>
+            <td colspan="2">
+                <span>@ViewBag.shopName</span>
+                </td>
+        </tr>
+
+
+<tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.wtType)：</p>
+                    </td>
+    <td colspan="2">
+       
+  @Html.ValueBoxForEnum("wtType", new[] { WenTiType.客服要求, WenTiType.库存, WenTiType.发货, WenTiType.物流, WenTiType.付款方式, WenTiType.促销活动, WenTiType.售后, WenTiType.其它 }, Html.DisplayValueFor(m=>m.wtType).ToString())
+        
+        
+        @Html.RequriedMarkFor(model => model.wtType)
+        @Html.ValidationMessageFor(model => model.wtType)
+    </td>
+                </tr>
+        <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.NContent)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.NContent) 
+                        @Html.RequriedMarkFor(model => model.NContent)
+                        @Html.ValidationMessageFor(model => model.NContent)</td>
+                </tr> 
+        
+        
+                <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.NAnswer)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.NAnswer) 
+                        @Html.RequriedMarkFor(model => model.NAnswer)
+                        @Html.ValidationMessageFor(model => model.NAnswer)</td>
+                </tr>
+
+                <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                          @if (ViewBag.Edit == "1")
+                          {
+                                 @Html.Hidden("IsEdit", "1");
+
+
+                          }
+                            @if (ViewBag.shopid != null)
+                            {
+  
+                                @Html.Hidden("shopid", ViewBag.shopid as string)
+                            }
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "MyWenTiIndex", "MyWenti", new { shopid = ViewBag.shopid as string }, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+
+

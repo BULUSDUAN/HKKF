@@ -1,0 +1,82 @@
+﻿@using DocumentFormat.OpenXml.Office.CustomUI
+@model JieNuo.Data.PagedData<hkkf.Models.Contact>
+
+@{
+    ViewBag.Title = "合同管理";
+    Layout = "~/Areas/Finance/Views/Shared/_FinanceSite.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+
+    });
+ </script>
+
+
+@Html.NavigationBar("合同查询", " 合同管理")
+@using (Ajax.JQueryBeginForm("ContactIndex", "Contact", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                合同名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>合同名</th>            
+                <th>销售</th>   
+                <th>上传时间</th> 
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+<td>@Html.DisplayValueFor(item, it => it.CName)</td>
+    <td>@Html.DisplayValueFor(item._user, it => it.userName)</td>
+    <td>@Html.DisplayValueFor(item, it => it.ContacTime)</td>
+    <td>
+         @Html.ActionLink("修改合同", "ContactEdit", "Contact", new { id = item.ID }, new { target = "#main", @class = "button4" })
+         
+    </td>
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}
+

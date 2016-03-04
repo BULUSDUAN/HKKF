@@ -1,0 +1,109 @@
+﻿@using hkkf.Models;
+@using hkkf.Repositories;
+@model IEnumerable<hkkf.Models.User>
+@{
+    Layout = null;
+}
+
+<form method="post" action="@this.Request.Url.AbsoluteUri" class="operatInfoDiv">
+      
+      <style type="text/css">
+        .shop-list li{float:left;margin:5px;}
+         .shop-list  input{width:22px;height:22px;}
+      </style>
+      @{Shop _Shop = ViewData["_Shop"] as Shop;       
+       }
+     @{
+         if (ViewData["DepartMentID"].ToString().Trim() == "1" || ViewData["DepartMentID"].ToString().Trim() == "3")
+         {
+    <table>
+    <tr>
+    <th>高唐</th>
+    <td>
+     <ul class="shop-list">
+      @foreach (var item in Model)
+      {
+          //如果不是全托，那么跳出继续
+          if (item.DepartMent.ID == 3)
+          {
+              //如果店铺在ShopGroupDetails中，那么选中，如果不在，则默认不选中。
+              List<PinFen> listPinFen = ViewData["listPinFen"] as List<PinFen>;
+              PinFen pinFen = listPinFen.Where(it => it._user == item).FirstOrDefault();
+              if (pinFen == null)
+              {
+                  if (item == _Shop.MainKfUser)
+                  {
+                      <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.strUserName</li>
+                  }
+                  else
+                  {
+                       <li><input type="checkbox" name="ids" value="@item.ID"/>@item.strUserName</li>
+                  }
+              }
+              else
+              {
+                  //如果是主客服，那么不能修改，如果不是主客服，那么可以修改。
+                  if (pinFen._shop.MainKfUser == item)
+                  {
+                        <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.strUserName</li>
+                  }
+                  else
+                  {
+                        <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.strUserName</li>
+                  }
+              }
+          }
+      } 
+    </ul>
+    </td>
+    </tr>
+</table>
+   }}
+
+ @{
+     if (ViewData["DepartMentID"].ToString().Trim() == "1" || ViewData["DepartMentID"].ToString().Trim() == "2")
+     {
+ <table>
+    <tr>
+    <th>济南</th>
+    <td>
+    <ul class="shop-list">
+      @foreach (var item in Model)
+      {
+          //
+          if (item.DepartMent.ID == 2)
+          {
+              //如果店铺在ShopGroupDetails中，那么选中，如果不在，则默认不选中。
+              List<PinFen> listPinFen = ViewData["listPinFen"] as List<PinFen>;
+              PinFen pinFen = listPinFen.Where(it => it._user == item).FirstOrDefault();
+              if (pinFen == null)
+              {
+                  if (item == _Shop.MainKfUser)
+                  {
+                      <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.strUserName</li>
+                  }
+                  else
+                  {
+                       <li><input type="checkbox" name="ids" value="@item.ID"/>@item.strUserName</li>
+                  }
+              }
+              else
+              {
+                  //如果是主客服，那么不能修改，如果不是主客服，那么可以修改。
+                  if (pinFen._shop.MainKfUser == item)
+                  {
+                        <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.strUserName</li>
+                  }
+                  else
+                  {
+                        <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.strUserName</li>
+                  }
+              }
+          }
+      } 
+    </ul>
+    </td>
+    </tr>  
+   </table> 
+     }}
+</form>

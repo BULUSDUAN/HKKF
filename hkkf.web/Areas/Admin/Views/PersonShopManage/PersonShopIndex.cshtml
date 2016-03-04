@@ -1,0 +1,106 @@
+﻿@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.PersonShop>
+
+@{
+    ViewBag.Title = "人员分配店铺管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("分配信息", " 人员分配店铺管理")
+@using (Ajax.JQueryBeginForm("PersonShopIndex", "PersonShopManage", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+    <tr>
+        <th>
+            客服姓名：
+        </th>
+        <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+        </td>
+        <th>
+            店铺名：
+        </th>
+        <td style="width: 220px;">@Html.TextBox("ShopName", null, new { id = "Name" })
+        </td>
+    </tr>
+    <tr>
+            
+            <th>
+                安排时间：从
+            </th>
+            <td>@Html.ValueBoxForItem(model => model._DateTime, TempData["startDate"], "startDate", new { id = "startDate" })</td>
+                    <th>至</th>
+                    <td>@Html.ValueBoxForItem(model => model._DateTime, TempData["endDate"], "endDate", new { id = "endDate" })</td>  
+           
+        </tr>
+        <tr>
+            <th></th>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+   
+     @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()
+      <input  class="button8" value="删除排班记录" type="submit" id="deleteBtn"/>   
+   
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>客服姓名</th>            
+                <th>所负责店铺</th>                 
+                <th>星期几 </th> 
+                <th>安排时间</th>
+                <th>早/晚班</th>  
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+<td>@Html.DisplayValueFor(item._user, it => it.userName)</td>
+    <td>
+        @{
+        PersonShopRepository shopRepository = new PersonShopRepository();
+        }
+        <span>@shopRepository.GetShopNameByShopID(item.shopID)</span>
+    
+    </td>
+<td>@Html.DisplayValueFor(item, it => it.weeks)</td>
+    <td>@Html.DisplayValueFor(item, it => it._DateTime)</td>
+     <td>@Html.DisplayValueFor(item, it => it.DayOrNight)</td>
+    <td> @Html.ActionLink("修改", "EditPersonShop", "PersonShopManage", new { id = item.ID }, new { target = "#main", @class = "button4" })</td>
+ 
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

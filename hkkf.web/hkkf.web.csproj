@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1F93412A-0866-44D0-AF37-DB9BB2AC7CFD}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>hkkf.web</RootNamespace>
+    <AssemblyName>hkkf.web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="antlr.runtime">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\antlr.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\Open XML\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LJZC\References\SharpZipLib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Common">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Core">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Data">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Data.NHibernate">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Data.NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="JieNuo.Extensions">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\JieNuo\JieNuo.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Spring">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.ByteCode.Spring.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Caches.SysCache.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache2">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Caches.SysCache2.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Linq">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\..\..\房地产经纪人报名系统\HouseAgent\References\NHibernate\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExamManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PaiBanController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PersonShopManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PinFenManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShopEnumManangeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShopManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StudentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WentiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WwhManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PayController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShopGroupManangeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SalaryController.cs" />
+    <Compile Include="Areas\Finance\Controllers\ContactController.cs" />
+    <Compile Include="Areas\Finance\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Finance\FinanceAreaRegistration.cs" />
+    <Compile Include="Areas\Sale\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
+    <Compile Include="Areas\Service\Common\PersonExtension.cs" />
+    <Compile Include="Areas\Service\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Service\Controllers\MyShopController.cs" />
+    <Compile Include="Areas\Service\Controllers\MyWentiController.cs" />
+    <Compile Include="Areas\Service\Controllers\MyPaiBanController.cs" />
+    <Compile Include="Areas\Service\Controllers\TestController.cs" />
+    <Compile Include="Areas\Service\Controllers\TestWrongController.cs" />
+    <Compile Include="Areas\Service\ServiceAreaRegistration.cs" />
+    <Compile Include="Common\GetWeeks.cs" />
+    <Compile Include="Common\IsImage.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ServiceDemoController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HtmlHelpers\ActionFormExtension.cs" />
+    <Compile Include="HtmlHelpers\ActionSubmitButtonExtension.cs" />
+    <Compile Include="HtmlHelpers\BatchButtonExtension.cs" />
+    <Compile Include="HtmlHelpers\BoolSelectExtension.cs" />
+    <Compile Include="HtmlHelpers\CurrentPositionExtension.cs" />
+    <Compile Include="HtmlHelpers\DisplayValueForBoolExtension.cs" />
+    <Compile Include="HtmlHelpers\EnumerationItemSelectExtension.cs" />
+    <Compile Include="HtmlHelpers\EnumerationSelectExtension.cs" />
+    <Compile Include="HtmlHelpers\EnumSelectExtension.cs" />
+    <Compile Include="HtmlHelpers\RequriedMarkForExtension.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\flash\expressInstall.swf" />
+    <Content Include="Content\flash\uploadify.allglyphs.swf" />
+    <Content Include="Content\flash\uploadify.swf" />
+    <Content Include="Content\images\arrow_left.gif" />
+    <Content Include="Content\images\arrow_right.gif" />
+    <Content Include="Content\images\Asc.png" />
+    <Content Include="Content\images\bg.gif" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\body_bg.gif" />
+    <Content Include="Content\images\body_bg.png" />
+    <Content Include="Content\images\button.png" />
+    <Content Include="Content\images\button2.png" />
+    <Content Include="Content\images\button_10.png" />
+    <Content Include="Content\images\button_4.png" />
+    <Content Include="Content\images\button_6.png" />
+    <Content Include="Content\images\button_8.png" />
+    <Content Include="Content\images\button_active.png" />
+    <Content Include="Content\images\button_create.png" />
+    <Content Include="Content\images\button_create_active.png" />
+    <Content Include="Content\images\button_save.png" />
+    <Content Include="Content\images\button_save_active.png" />
+    <Content Include="Content\images\calendar.gif" />
+    <Content Include="Content\images\calendar.png" />
+    <Content Include="Content\images\cancel.png" />
+    <Content Include="Content\images\chromeBrowser.png" />
+    <Content Include="Content\images\chromeLogo.png" />
+    <Content Include="Content\images\CleanBox.png" />
+    <Content Include="Content\images\comment.png" />
+    <Content Include="Content\images\CSSD_Models_CleanBox.png" />
+    <Content Include="Content\images\CSSD_Models_Cleaner.png" />
+    <Content Include="Content\images\CSSD_Models_CleanerWorkingParameter.png" />
+    <Content Include="Content\images\CSSD_Models_Department.png" />
+    <Content Include="Content\images\CSSD_Models_Employee.png" />
+    <Content Include="Content\images\CSSD_Models_Employee2.png" />
+    <Content Include="Content\images\CSSD_Models_Employee3.png" />
+    <Content Include="Content\images\CSSD_Models_InOutType.png" />
+    <Content Include="Content\images\CSSD_Models_Instrument.png" />
+    <Content Include="Content\images\CSSD_Models_Label.png" />
+    <Content Include="Content\images\CSSD_Models_Pack.png" />
+    <Content Include="Content\images\CSSD_Models_PackRecord.png" />
+    <Content Include="Content\images\CSSD_Models_Sterilizer.png" />
+    <Content Include="Content\images\CSSD_Models_SterilizerWorkingParameter.png" />
+    <Content Include="Content\images\CSSD_Models_ValidityTerm.png" />
+    <Content Include="Content\images\cuo.jpg" />
+    <Content Include="Content\images\Delete.png" />
+    <Content Include="Content\images\Desc.png" />
+    <Content Include="Content\images\Details.png" />
+    <Content Include="Content\images\Disabled.png" />
+    <Content Include="Content\images\DisableUser.png" />
+    <Content Include="Content\images\download.png" />
+    <Content Include="Content\images\dui.jpg" />
+    <Content Include="Content\images\Enabled.png" />
+    <Content Include="Content\images\EnableUser.png" />
+    <Content Include="Content\images\Encryption.gif" />
+    <Content Include="Content\images\fhbg.gif" />
+    <Content Include="Content\images\first.gif" />
+    <Content Include="Content\images\first_disabled.gif" />
+    <Content Include="Content\images\head_bg.png" />
+    <Content Include="Content\images\hl.png" />
+    <Content Include="Content\images\ie8.PNG" />
+    <Content Include="Content\images\index.PNG" />
+    <Content Include="Content\images\input_text_bg.png" />
+    <Content Include="Content\images\input_text_bg_error.png" />
+    <Content Include="Content\images\input_text_bg_null.png" />
+    <Content Include="Content\images\input_text_bg_warning.png" />
+    <Content Include="Content\images\key.png" />
+    <Content Include="Content\images\last.gif" />
+    <Content Include="Content\images\last_disabled.gif" />
+    <Content Include="Content\images\lava.gif" />
+    <Content Include="Content\images\lava.png" />
+    <Content Include="Content\images\lavalamp_bg.gif" />
+    <Content Include="Content\images\lava_left.png" />
+    <Content Include="Content\images\lava_right.png" />
+    <Content Include="Content\images\left.gif" />
+    <Content Include="Content\images\li-sep.png" />
+    <Content Include="Content\images\line.gif" />
+    <Content Include="Content\images\loader.gif" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\login_bg.png" />
+    <Content Include="Content\images\login_pic.png" />
+    <Content Include="Content\images\login_table_bg.png" />
+    <Content Include="Content\images\logo.gif" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logotx.png" />
+    <Content Include="Content\images\lt_e.gif" />
+    <Content Include="Content\images\lt_e2.gif" />
+    <Content Include="Content\images\main_bg.png" />
+    <Content Include="Content\images\menu_bottom.png" />
+    <Content Include="Content\images\menu_title.png" />
+    <Content Include="Content\images\menu_title_icon.png" />
+    <Content Include="Content\images\menu_top.png" />
+    <Content Include="Content\images\Modify.png" />
+    <Content Include="Content\images\ms-silverlight-logo.png" />
+    <Content Include="Content\images\neck_bg.png" />
+    <Content Include="Content\images\neck_bg_left.png" />
+    <Content Include="Content\images\neck_bg_right.png" />
+    <Content Include="Content\images\next.gif" />
+    <Content Include="Content\images\next_disabled.gif" />
+    <Content Include="Content\images\pagerbg.png" />
+    <Content Include="Content\images\position_center.png" />
+    <Content Include="Content\images\position_left.png" />
+    <Content Include="Content\images\position_right.png" />
+    <Content Include="Content\images\prev.gif" />
+    <Content Include="Content\images\prev_disabled.gif" />
+    <Content Include="Content\images\printer.png" />
+    <Content Include="Content\images\printer_delete.png" />
+    <Content Include="Content\images\rar.png" />
+    <Content Include="Content\images\Refresh.png" />
+    <Content Include="Content\images\right.gif" />
+    <Content Include="Content\images\rmb.png" />
+    <Content Include="Content\images\save.png" />
+    <Content Include="Content\images\scissors.png" />
+    <Content Include="Content\images\submenu-bottom.png" />
+    <Content Include="Content\images\submenu-pointer.png" />
+    <Content Include="Content\images\subsubmenu-top.png" />
+    <Content Include="Content\images\System_Int32.png" />
+    <Content Include="Content\images\System_UInt32.png" />
+    <Content Include="Content\images\s_zs.gif" />
+    <Content Include="Content\images\text.png" />
+    <Content Include="Content\images\thead_bg.PNG" />
+    <Content Include="Content\images\title_2.gif" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\images\uploadbutton.jpg" />
+    <Content Include="Content\images\User.png" />
+    <Content Include="Content\images\valuebox_button.png" />
+    <Content Include="Content\images\valuebox_button_down.png" />
+    <Content Include="Content\images\valuebox_button_over.png" />
+    <Content Include="Content\images\warning.png" />
+    <Content Include="Content\images\win_logo.png" />
+    <Content Include="Content\jquery-ui-1.8.custom.css" />
+    <Content Include="Content\print.css" />
+    <Content Include="Content\reset-fonts-grids.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\uploadify.css" />
+    <Content Include="Global.asax" />
+    <Content Include="LoginJSCSS\css\reset.css" />
+    <Content Include="LoginJSCSS\css\style.css" />
+    <Content Include="LoginJSCSS\images\button.png" />
+    <Content Include="LoginJSCSS\images\header_bg.png" />
+    <Content Include="LoginJSCSS\images\input_bg.png" />
+    <Content Include="LoginJSCSS\images\input_name.png" />
+    <Content Include="LoginJSCSS\images\input_name_hover.png" />
+    <Content Include="LoginJSCSS\images\input_password.png" />
+    <Content Include="LoginJSCSS\images\input_password_hover.png" />
+    <Content Include="LoginJSCSS\images\login_bg.png" />
+    <Content Include="LoginJSCSS\images\logo.jpg" />
+    <Content Include="LoginJSCSS\images\Logo.png" />
+    <Content Include="LoginJSCSS\images\logo_ico.png" />
+    <Content Include="LoginJSCSS\images\member_title.png" />
+    <Content Include="LoginJSCSS\js\belatedpng.js" />
+    <Content Include="LoginJSCSS\js\placeholder.js" />
+    <Content Include="Scripts\city.min.js" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Scripts\jquery-1.4.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.2.js" />
+    <Content Include="Scripts\jquery-1.4.2.min.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.custom.min.js" />
+    <Content Include="Scripts\jquery.bgiframe.min.js" />
+    <Content Include="Scripts\jquery.cityselect.js" />
+    <Content Include="Scripts\jquery.color.js" />
+    <Content Include="Scripts\jquery.easing.min.js" />
+    <Content Include="Scripts\jquery.eventBtn.js" />
+    <Content Include="Scripts\jquery.form-1.3.js" />
+    <Content Include="Scripts\jquery.history.js" />
+    <Content Include="Scripts\jquery.tooltip-1.0.js" />
+    <Content Include="Scripts\jquery.tooltip-1.0.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.valuebox-1.4.3.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\oa\oa-dialog.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\test_sunrj.js" />
+    <Content Include="Scripts\ui.datepicker-zh-CN.js" />
+    <Content Include="Scripts\ui.datetimepicker.js" />
+    <Content Include="Views\ViewPage1.aspx" />
+    <Content Include="排表.txt" />
+    <Content Include="注意.txt" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="问题.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Finance\Models\" />
+    <Folder Include="Areas\Sale\Models\" />
+    <Folder Include="Areas\Service\Models\" />
+    <Folder Include="UploadFile\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\hkkf.Common\hkkf.Common.csproj">
+      <Project>{DDEAB85A-FDC1-46F1-B343-A677CF313CD5}</Project>
+      <Name>hkkf.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\hkkf.Models\hkkf.Models.csproj">
+      <Project>{5B88A18F-9AC3-425D-B4E8-77E19698607C}</Project>
+      <Name>hkkf.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\hkkf.Repositories\hkkf.Repositories.csproj">
+      <Project>{03CA6AA2-604C-4D55-80E8-5ED3671071E0}</Project>
+      <Name>hkkf.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JieNuo.Web.Mvc\JieNuo.Web.Mvc.csproj">
+      <Project>{2C723415-5D13-4439-AB4A-06AF7AC987CC}</Project>
+      <Name>JieNuo.Web.Mvc</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Site.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_menu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\Admin\Views\UserManage\UserIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManage\AddUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopManage\ShopIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopManage\AddShop.cshtml" />
+    <Content Include="Areas\Admin\Views\PersonShopManage\PersonShopIndex.cshtml" />
+    <Content Include="Areas\Sale\Views\Web.config" />
+    <Content Include="Areas\Service\Views\Web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_admin.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_menu.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManage\FenPei.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\FenPeiDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\PersonShopManage\EditPersonShop.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopEnumManange\ShopTypeIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopEnumManange\AddShopEnumType.cshtml" />
+    <Content Include="Areas\Service\Views\Shared\_ServiceSite.cshtml" />
+    <Content Include="Areas\Service\Views\Shared\_menu.cshtml" />
+    <Content Include="Areas\Service\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Service\Views\Home\ShopRecord.cshtml" />
+    <Content Include="Areas\Sale\Views\Shared\_SaleSite.cshtml" />
+    <Content Include="Areas\Sale\Views\Shared\_menu.cshtml" />
+    <Content Include="Areas\Sale\Views\Home\ShopIndex.cshtml" />
+    <Content Include="Areas\Sale\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Finance\Views\Web.config" />
+    <Content Include="Areas\Finance\Views\Shared\_menu.cshtml" />
+    <Content Include="Areas\Finance\Views\Shared\_FinanceSite.cshtml" />
+    <Content Include="Areas\Finance\Views\Home\ShopIndex.cshtml" />
+    <Content Include="Areas\Finance\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Finance\Views\Contact\UserIndex.cshtml" />
+    <Content Include="Areas\Finance\Views\Contact\ContactUpload.cshtml" />
+    <Content Include="Areas\Finance\Views\Contact\ContactIndex.cshtml" />
+    <Content Include="Areas\Finance\Views\Contact\ContactEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManage\UsershopIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Wenti\WenTiIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Wenti\AddWenTi.cshtml" />
+    <Content Include="Areas\Admin\Views\WwhManage\wwhIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\WwhManage\wwhAdd.cshtml" />
+    <Content Include="Areas\Admin\Views\PinFenManage\PinFenByUserIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ExamManage\ExamIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ExamManage\AddExamType.cshtml" />
+    <Content Include="Areas\Admin\Views\ExamManage\ExamPageManange.cshtml" />
+    <Content Include="Areas\Admin\Views\ExamManage\AddExamPageType.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\PaiBanIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\EditPb.cshtml" />
+    <Content Include="Areas\Admin\Views\Student\AddStudent.cshtml" />
+    <Content Include="Areas\Admin\Views\Student\StudentIndex.cshtml" />
+    <Content Include="Areas\Service\Views\MyShop\MyShopIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopManage\ShopIndexForFenPei.cshtml" />
+    <Content Include="Areas\Service\Views\MyWenti\AddWenTi.cshtml" />
+    <Content Include="Areas\Service\Views\MyWenti\MyWenTiIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\PaiBanByDateIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\PaiBanByShopIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\PaiBanByUsersIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\ToPaiBanByShopGroupIndex.cshtml" />
+    <Content Include="Areas\Service\Views\MyPaiBan\MyPaiBanByUsersIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\PaiBanByUsersTongjiIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Pay\PayRecordIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Pay\AddPayTiChengRecord.cshtml" />
+    <Content Include="Areas\Service\Views\MyPaiBan\MySalary.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopManage\ShopIndexForFenPeiQuery.cshtml" />
+    <Content Include="Areas\Service\Views\MyPaiBan\MyPaiBanRecords.cshtml" />
+    <Content Include="Areas\Service\Views\MyShop\aaa.cshtml" />
+    <Content Include="Areas\Service\Views\MyShop\MyShopList.cshtml" />
+    <Content Include="Areas\Service\Views\MyShop\test.cshtml" />
+    <Content Include="Areas\Service\Views\MyPaiBan\MyShopList.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\AddShopGroup.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\ShopGroupIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\Add_ShopGroupDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopManage\Add_ShopKefu.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\ShopGroupIndexForFenPei.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\Add_ShopGroupKefu.cshtml" />
+    <Content Include="Areas\Service\Views\Test\Test.cshtml" />
+    <Content Include="Areas\Service\Views\Test\Testend.cshtml" />
+    <Content Include="Areas\Service\Views\Test\TestProblem.cshtml" />
+    <Content Include="Areas\Service\Views\TestWrong\TestWrong.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\ShopTempletIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\AddShopTemplet.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\Add_ShopTempletDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\ToPaiBanByShopTempletIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\PaiBan\Add_ShopTemplet.cshtml" />
+    <Content Include="Areas\Service\Views\MyPaiBan\MyPaiBanRecordsTongji.cshtml" />
+    <Content Include="Areas\Service\Views\MyShop\MyShopPaiBanDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopManage\MyShopPaiBanList.cshtml" />
+    <Content Include="Areas\Admin\Views\ShopGroupManange\AddShopGroup2.cshtml" />
+    <Content Include="Areas\Admin\Views\Pay\PayRecordManageIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Pay\PayRequireRecordIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Pay\AddPayBaseRecord.cshtml" />
+    <Content Include="Areas\Admin\Views\Salary\AddStudent.cshtml" />
+    <Content Include="Areas\Admin\Views\Salary\StudentIndex.cshtml" />
+    <None Include="Content\images\new.Stream" />
+    <Content Include="Views\Shared\Ajax.cshtml" />
+    <Content Include="Views\Shared\_NavigationBar.cshtml" />
+    <Content Include="packages.config" />
+    <Content Include="Views\Common\Error.cshtml" />
+    <Content Include="Views\Common\Grid.cshtml" />
+    <Content Include="Views\Common\Query.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>43982</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

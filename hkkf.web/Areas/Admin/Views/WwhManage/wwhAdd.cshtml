@@ -1,0 +1,100 @@
+﻿@using hkkf.Models
+@model hkkf.Models.wwh
+
+
+@{
+    ViewBag.Title = "添加旺旺号";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+        $(function () {
+            $("#btnOK").click(function () {
+                if ($("#Name").attr("value").trim() === "") {
+                    operationSuccessDialog.html("请输入旺旺名！");
+                    operationSuccessDialog.dialog('open');
+                    return false;
+                }
+                if ($("#Password").attr("value").trim() === "") {
+                    operationSuccessDialog.html("请输入密码！");
+                    operationSuccessDialog.dialog('open');
+                    return false;
+                }
+              
+
+            }
+            );
+        });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("添加旺旺号", "旺旺号管理")
+@using (Ajax.JQueryBeginForm("wwhAdd", "WwhManage", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    
+    <div class="alertMessageContainer" >@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0">
+
+
+
+ <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model._Shop)：</p>
+            </td>
+            <td colspan="2">
+                <span>@ViewBag.shopName</span>
+                </td>
+        </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.Name)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxFor(model => model.Name)
+                @Html.RequriedMarkFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name) </td>
+        </tr>
+
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.Password)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxFor(model => model.Password)
+                @Html.RequriedMarkFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)</td>
+        </tr>
+
+
+
+
+        <tr>
+            <td align="right">&nbsp; </td>
+            <td width="23%" height="60">
+                @if (ViewBag.Edit == "1")
+                {
+                    @Html.Hidden("IsEdit", "1")
+                    ;
+
+
+                }
+                @if (ViewBag.shopid != null)
+                {
+
+                    @Html.Hidden("shopid", ViewBag.shopid as string)
+                }
+                <label>
+                    <input type="submit" name="button" id="btnOK" class="button" value="保存"/>
+                </label>
+            </td>
+            <td>
+                <label>
+                    @Html.ActionLink("返回", "wwhIndex", "WwhManage", new {shopid = ViewBag.shopid as string}, new {target = "#main", @class = "button"})
+                </label>
+            </td>
+        </tr>
+    </table>
+}
+
+

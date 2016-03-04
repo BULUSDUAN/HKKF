@@ -1,0 +1,203 @@
+﻿@using hkkf.Models
+@using hkkf.Repositories
+@model hkkf.Models.User
+
+
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnOK").click(function () {
+            if ($("#Name").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入用户名！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#Password").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入密码！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#surePwd").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入确认密码！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            
+           
+            if ($("#Tel").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入手机号！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+            if ($("#QQ").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入QQ！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+
+        }
+        );
+    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("用户管理", "添加用户")
+@using (Ajax.JQueryBeginForm("AddUser", "UserManage", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    @Html.Hidden("isedit",  ViewBag.isEdit as string)
+    <div class="alertMessageContainer" >@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0">
+
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.Name)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model=> model.Name)
+                        @Html.RequriedMarkFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name) </td>
+                </tr>
+                <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.Password)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.Password) 
+                        @Html.RequriedMarkFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password)</td>
+        </tr>
+        @if (ViewBag.isEdit!="1")
+        {
+            <tr>
+                <td width="17%" align="right">
+                    <p>确认密码：</p>
+                </td>
+                <a href="../../Controllers/WwhManageController.cs">../../Controllers/WwhManageController.cs</a>
+                <td colspan="2">
+                    @Html.ValueBox("surePwd", new {type = "password"})
+                    @Html.RequriedMarkFor(model => model.Password)
+                </td>
+            </tr>          
+        }
+          <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.Type)：</p>
+                    </td>
+                <td colspan="2">
+                      @Html.DropDownListFor(model => model.Type.ID,ViewBag.TypeList as IEnumerable<SelectListItem> )                     
+                </td>
+          </tr>        
+            <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.UserEnmLevel)：</p>
+                    </td>
+                <td colspan="2">
+                      @Html.DropDownListFor(model => model.UserEnmLevel.ID,ViewBag.UserLevelList as IEnumerable<SelectListItem> )                     
+                </td>
+          </tr>       
+          
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.userName)：</p>
+            </td>
+            <td colspan="2">@Html.ValueBoxFor(model => model.userName)</td>
+        </tr>
+        <tr>
+            <td width="17%" align="right">
+                <p>@Html.DisplayNameFor(model => model.Tel)：</p>
+            </td>
+            <td colspan="2">
+                @Html.ValueBoxFor(model => model.Tel) 
+                @Html.RequriedMarkFor(model => model.Tel)
+                @Html.ValidationMessageFor(model => model.Tel)</td>
+        </tr>
+        <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.PrivateQQ)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.PrivateQQ) 
+                        @Html.RequriedMarkFor(model => model.PrivateQQ)
+                        @Html.ValidationMessageFor(model => model.PrivateQQ)</td>
+                </tr>
+                 <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.workQQ)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.workQQ) 
+                        @Html.RequriedMarkFor(model => model.workQQ)
+                        @Html.ValidationMessageFor(model => model.workQQ)</td>
+                </tr>
+                 <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.WorkQQName)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.WorkQQName) 
+                        @Html.RequriedMarkFor(model => model.WorkQQName)
+                        @Html.ValidationMessageFor(model => model.WorkQQName)</td>
+                </tr>
+                 <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.WorkQQPassword)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.WorkQQPassword) 
+                        @Html.RequriedMarkFor(model => model.WorkQQPassword)
+                        @Html.ValidationMessageFor(model => model.WorkQQPassword)</td>
+                </tr>
+                 <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.Email)：</p>
+                    </td>
+                    <td colspan="2">
+                        @Html.ValueBoxFor(model => model.Email) 
+                        @Html.RequriedMarkFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)</td>
+                </tr>
+                  <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.DepartMent)：</p>
+                    </td>
+                    <td colspan="2">
+                       @Html.DropDownListFor(model => model.DepartMent.ID, ViewData["listDepartMent"] as IEnumerable<SelectListItem>)   
+                     </td>
+                </tr>
+                  <tr>
+                    <td width="17%" align="right">
+                        <p>@Html.DisplayNameFor(model => model.UserStateID)：</p>
+                    </td>
+                    <td colspan="2">
+                        @{
+                            List<SelectListItem> listJianZhiOrFullTime=new List<SelectListItem>{
+                                new SelectListItem{Text="全职",Value="全职"},
+                                new SelectListItem{Text="兼职",Value="兼职"},
+                                 new SelectListItem{Text="离职",Value="离职"},
+                            };
+                            @Html.DropDownListFor(model => model.UserStateID,listJianZhiOrFullTime)   
+                         }                                       
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存" />
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "UserIndex", "UserManage", null, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+
+

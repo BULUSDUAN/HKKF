@@ -1,0 +1,70 @@
+﻿@using hkkf.Models;
+@using hkkf.Repositories;
+@model IEnumerable<hkkf.Models.ShopGroups>
+@{
+    Layout = null;
+}
+
+<form method="post" action="@this.Request.Url.AbsoluteUri" class="operatInfoDiv">
+      
+      <style type="text/css">
+        .shop-list li{float:left;margin:5px;}
+         .shop-list  input{width:22px;height:22px;}
+      </style>
+    <table>
+     @{ 
+       
+         List<ShopTempletDetails> listShopTempletDetails = ViewData["listShopTempletDetails"] as List<ShopTempletDetails>;
+         <input type="hidden" name="ShopTempletID" value=@ViewData["ShopTempletID"]  />
+      }
+     
+    <tr>
+    <th>白班</th>
+    <td>
+    <ul class="shop-list">
+      @foreach (var item in Model)
+      {
+          //
+          if (item.WorkDayOrNight == DayOrNight.白班)
+          {
+              //如果店铺在ShopTempletDetails中，那么选中，如果不在，则默认不选中。          
+              int count = listShopTempletDetails.Where(it => it._ShopGroup == item).Count();
+              if (count == 0)
+              {
+                <li><input type="checkbox" name="ids" value="@item.ID"/>@item.ShopGroupName:@item.ContentShops</li>
+              }
+              else
+              { 
+                <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.ShopGroupName:@item.ContentShops</li>
+              }
+          }
+      } 
+    </ul>
+    </td>
+    </tr>
+    <tr>
+    <th>晚班</th>
+    <td>
+    <ul class="shop-list">
+      @foreach (var item in Model)
+      {
+          //如果不是全托，那么跳出继续
+          if (item.WorkDayOrNight == DayOrNight.晚班)
+          {
+              //如果店铺在ShopTempletDetails中，那么选中，如果不在，则默认不选中。
+              int count = listShopTempletDetails.Where(it => it._ShopGroup == item).Count();
+              if (count == 0)
+              {
+                 <li><input type="checkbox" name="ids" value="@item.ID"/>@item.ShopGroupName:@item.ContentShops</li>
+              }
+              else
+              { 
+                <li><input type="checkbox" name="ids" value="@item.ID" Checked="checked"/>@item.ShopGroupName:@item.ContentShops</li>
+              }
+         }
+      } 
+    </ul>
+    </td>
+    </tr>   
+    </table> 
+</form>

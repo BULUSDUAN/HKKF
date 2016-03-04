@@ -1,0 +1,139 @@
+﻿@using hkkf.Repositories
+@model JieNuo.Data.PagedData<hkkf.Models.Shop>
+
+@{
+    ViewBag.Title = "店铺管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+
+    });
+ </script>
+
+
+@Html.NavigationBar("店铺信息", " 店铺管理")
+@using (Ajax.JQueryBeginForm("ShopIndex", "ShopManage",null, new JQueryOptions { UpdateTarget = "#main" }))
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+      
+    if (ViewBag.isKf != "1")
+    {
+       @Html.AllCheckButton() @Html.AllOtherButton() @Html.AllCancelButton()  
+        @Html.ActionLink("添加店铺", "AddShop", "ShopManage", "Add", new { target = "#main", @class = "button4" }) 
+      @* <a data-opt="add" class="button4" href="/admin/ShopManage/AddShop">添加店铺2</a>*@
+       <input  class="button4" value="删除店铺" type="submit" id="deleteBtnaa"/>
+    }
+  
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th></th>
+                <th>@Html.DisplayNameForSerialNum() </th>
+                <th>店铺名</th>
+                <th>联系人</th>                 
+                <th>联系电话 </th> 
+                <th>所属类别</th>
+                <th>值班类型</th>
+                <th>组数</th>
+                <th>月费用</th>
+                <th>付款周期</th>
+                <th>销售提成</th>
+                <th>所属部门</th>
+                <th>销售人员</th>
+                <th>管理人员</th>
+                <th>主客服</th>
+                <th>店铺状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;  
+               
+  
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+ <td>@Html.CheckBoxButton(item.ID)</td>
+<td>@(i++) </td>
+    <td>@Html.DisplayValueFor(item, it => it.Name)</td>
+  <td>@Html.DisplayValueFor(item, it => it.ContractPerson)</td>
+<td>@Html.DisplayValueFor(item, it => it.Tel)</td>
+    <td>      
+        @Html.DisplayValueFor(item, it => it.Type)     
+    </td>
+    <td>
+       @Html.Raw(item.ZhiBanTypeID.ToString())
+      </td>
+      <td>
+       @Html.DisplayValueFor(item, it => it.GroupCount)
+      </td>
+       <td>
+       @Html.DisplayValueFor(item, it => it.PriceByMonth)
+      </td>
+          <td>
+       @Html.DisplayValueFor(item, it => it._PayCircle)
+      </td>
+      <td>
+      @Html.DisplayValueFor(item, it => it.TiChengRate)
+      </td>    
+         <td>
+       @Html.DisplayValueFor(item, it => it._Kf_DepartMent)
+      </td>
+          <td>
+       @Html.DisplayValueFor(item, it => it.SaleUser)
+      </td>
+          <td>
+       @Html.DisplayValueFor(item, it => it.DemandUser)
+      </td>
+      <td>
+       @Html.DisplayValueFor(item, it => it.MainKfUser)
+      </td>
+      <td>
+       @Html.Raw(item.ShopStateID.ToString())
+      </td>
+   <td>
+       @Html.Hidden("isKf", ViewBag.bz as string)
+        @if (ViewBag.isKf == "1")
+        {
+             
+             @Html.ActionLink("店铺人员分配", "FenPei1", "UserManage", new { area = "Admin", shopid = item.ID }, new { title = "店铺人员分配", @class = "button6" }) 
+        }
+        else
+        {
+   @Html.ActionLink("修改", "AddShop", "ShopManage", new { id = item.ID, IsEdit = 1 }, new { target = "#main", @class = "button4" })
+        @Html.ActionLink("旺旺号管理", "wwhIndex", "WwhManage", new { area = "Admin", shopid = item.ID, shopname = item.Name }, new { title = "旺旺号管理", @class = "button4" })
+        @Html.ActionLink("常见问题管理", "WenTiIndex", "Wenti", new { area = "Admin", shopid = item.ID, shopname = item.Name }, new { title = "常见问题管理", @class = "button6" })
+        }
+       </td>
+   
+</tr>
+    }
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

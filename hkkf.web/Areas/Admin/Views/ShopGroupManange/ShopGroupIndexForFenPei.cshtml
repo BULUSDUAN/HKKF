@@ -1,0 +1,111 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Serialization
+@using DocumentFormat.OpenXml.Spreadsheet
+@using hkkf.Models
+@using hkkf.Repositories
+@using JieNuo.Data;
+@model JieNuo.Data.PagedData<hkkf.Models.ShopGroups>
+
+@{
+    ViewBag.Title = "店铺班组管理";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+    
+}
+
+<script type="text/javascript">
+    $(function () {
+        batchMsg("deleteBtn");
+        $("#deleteBtn").click(function () {
+            $("#subAction").attr("value", "delete");
+        });
+    });
+    $(function () {
+       // batchMsg("updateBtn");
+        $("#updateBtn").click(function () {
+            $("#subAction").attr("value", "update");
+        });
+    });
+ </script>
+
+
+@Html.NavigationBar("店铺班组信息", " 店铺班组管理")
+@using (Ajax.JQueryBeginForm("ShopGroupIndexForFenPei", "ShopGroupManange", new JQueryOptions { UpdateTarget = "#main" }))
+ 
+{
+    @Html.Hidden("subAction", "", new { id = "subAction" })
+    <div class="alertMessageContainer" >@ViewBag.message</div>
+    <table class="conditionTable infoTable">
+        <tr>
+            <th>
+                店铺班组名：
+            </th>
+            <td style="width: 220px;">@Html.TextBox("Name", null, new { id = "Name" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "查询", new { id = "queryBtn", @class = "button" })
+            </td>
+            <td style="width: 220px;">@Html.ActionSubmitButton("queryBtn", "更新", new { id = "updateBtn", @class = "button" })
+            </td>
+        </tr>
+    </table>
+  <div class="grid">
+    <table class="dataTable">
+    <thead>
+            <tr>
+                <th>@Html.DisplayNameForSerialNum() </th>        
+                <th>店铺班组名</th>
+                <th>部门</th>
+                <th>白班晚班</th>
+                <th>班组店铺</th>
+                <th>客服</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @{
+                
+    int i = Model.Pager.FristDataPos;      
+    }
+    @foreach (var item in Model)
+    {
+<tr>
+<td>@(i++) </td>
+<td>@Html.DisplayValueFor(item, it => it.ShopGroupName)</td>
+<td>@Html.DisplayValueFor(item, it => it._Kf_DepartMent)</td>
+<td>@Html.DisplayValueFor(item, it => it.WorkDayOrNight)</td>
+<td>
+  @Html.Raw(item.ContentShops)             
+</td>
+ <td> 
+        @{//根据店铺班组，取出能够做这个班组的客服名单。
+        PersonShopGroupRepository PersonShopGroupRepo = new PersonShopGroupRepository();
+        List<PersonShopGroup> ListPersonShopGroup = PersonShopGroupRepo.GetAll()
+            .Where(it => it._ShopGroups == item)
+            .ToList();
+            if (ListPersonShopGroup.Count==0||ListPersonShopGroup== null)
+            {
+                @Html.Raw("无");
+            }
+            else
+            {
+                <table>
+                @{
+                foreach (var PersonShopGroup in ListPersonShopGroup)
+                {
+                    <tr><td>
+                    @Html.Raw(PersonShopGroup._User.ToString())
+                    </td></tr>
+                }
+                }
+                </table>
+            }                  
+        }
+    </td> 
+</tr>
+}
+</tbody>
+</table>
+@Html.Pager(Model.Pager)
+</div>
+    
+}

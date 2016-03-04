@@ -1,0 +1,18 @@
+﻿<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>    
+    <!--cache-->   
+    <property name="cache.use_query_cache">true</property>
+    <property name="cache.use_second_level_cache">true</property>
+    <property name="cache.provider_class">NHibernate.Caches.SysCache.SysCacheProvider, NHibernate.Caches.SysCache</property>
+   
+    <!--class-cache-->
+	  <class-cache region="quarter-hourly" class="hkkf.Models.User, hkkf.Models" usage="read-write"/>
+
+
+ 
+    <!--collection-cache-->
+    <!--<collection-cache region="hourly" collection="Northwind.Domain.Entities.Security.Permission.ImpliedBy" usage="read-write"/>
+    <collection-cache region="hourly" collection="Northwind.Domain.Entities.dbo.Order.Details" usage="read-write"/>-->
+
+  </session-factory>
+</hibernate-configuration>

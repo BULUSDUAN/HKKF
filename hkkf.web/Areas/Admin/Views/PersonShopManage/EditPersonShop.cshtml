@@ -1,0 +1,63 @@
+﻿@using hkkf.Models
+@model hkkf.Models.PersonShop
+
+
+@{
+    ViewBag.Title = "修改排班";
+    Layout = "~/Areas/Admin/Views/Shared/_admin.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnOK").click(function () {
+            if ($("#DayOrNight").attr("value").trim() === "") {
+                operationSuccessDialog.html("请输入白班还是晚班！");
+                operationSuccessDialog.dialog('open');
+                return false;
+            }
+        }
+        );
+    });
+ </script>
+
+@Html.ScriptForModel()
+@Html.NavigationBar("排班管理", "修改")
+@using (Ajax.JQueryBeginForm("EditPersonShop", "PersonShopManage", new JQueryOptions { UpdateTarget = "#main" }))
+
+{
+    <div class="alertMessageContainer" >@ViewData["alertMessage"]</div>
+    <table cellspacing="2" cellpadding="0">
+    @Html.Hidden("id", ViewBag.sID as string)
+                <tr>
+                    <td width="17%" align="right">
+                         <p>@Html.DisplayNameFor(model => model.DayOrNight)：</p>
+                    </td>
+                    <td colspan="2">
+                       
+                        @Html.ValueBoxForEnum("DayOrNight", new[] { Ban.白班,Ban.晚班, Ban.休班 }, Html.DisplayValueFor(m => m.DayOrNight).ToString())
+                        @Html.RequriedMarkFor(model => model.DayOrNight)
+                        @Html.ValidationMessageFor(model => model.DayOrNight) </td>
+                </tr>
+
+                <tr>
+                    <td align="right">&nbsp; </td>
+                    <td width="23%" height="60">
+                        <label>
+                            <input type="submit" name="button" id="btnOK" class="button" value="保存" />
+                            @if (ViewBag.Edit == "1")
+                            {
+                                 @Html.Hidden("IsEdit", "1")
+                            }
+                           
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            @Html.ActionLink("返回", "PersonShopIndex", "PersonShopManage", null, new { target = "#main", @class = "button" })
+                        </label>
+                    </td>
+                </tr>
+    </table>
+}
+
+
