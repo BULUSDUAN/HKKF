@@ -20,6 +20,7 @@ namespace hkkf.web
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        //
         public MvcApplication()
         {
             ThreadPool.QueueUserWorkItem(Init);

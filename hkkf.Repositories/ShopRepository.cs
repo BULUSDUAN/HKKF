@@ -21,6 +21,7 @@ namespace hkkf.Repositories
                 .WhereIf(u=>u._Kf_DepartMent==kf_DepartMent,kf_DepartMent.ID!=1)
                 .Page(queryInfo);
         }
+        //
         //用于选择班组内容
         public IEnumerable<Shop> GetData(int kf_DepartMentID)
         {
